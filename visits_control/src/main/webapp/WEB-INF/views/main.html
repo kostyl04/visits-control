@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="imports/template :: site-head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body>
+	<header th:replace="imports/template :: site-header" />
+	<div class="container text-center content">
+
+
+		<div class="col-xs-6 col-xs-offset-3">
+			<form id="form" th:action="@{/result}" method="POST"
+				accept-charset="utf-8" th:object="${formCommand}">
+				<div class="form-inline">
+					<div class="form-group">
+						<label for="month">Выберите месяц</label> <select
+							class="form-control" id="month" name="month" th:field="*{month}">
+
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="year">Выберите год</label> <select
+							class="form-control" id="year" name="year" th:field="*{year}">
+
+						</select>
+					</div>
+
+				</div>
+				<div class="form-group">
+					<label for="dep">Выберите подразделения</label> <select size="7"
+						multiple class="form-control" id="dep">
+
+					</select>
+				</div>
+				<div class="form-group ">
+					<label for="person">Выберите сотрудников</label> <select size="12"
+						multiple class="form-control " placeholder="все" id="person"
+						name="person" th:field="*{jsonStrings}">
+
+					</select>
+				</div>
+
+				<button type="submit" id="submit" class="btn btn-primary">Показать</button>
+			</form>
+		</div>
+	</div>
+	<footer th:replace="imports/template :: site-footer" />
+	<script th:inline="javascript">
+		var path = /*[[@{/}]]*/'test';
+	</script>
+	  <script th:src="@{js/form.js}"></script>
+</body>
+</html>
+

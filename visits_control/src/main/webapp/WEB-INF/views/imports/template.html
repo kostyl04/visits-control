@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="site-head">
+<meta charset="UTF-8" />
+<link rel="stylesheet"
+	th:href="@{css/bootstrap.min.css}">
+<script
+	th:src="@{js/jquery.min.js}"></script>
+<script
+	th:src="@{js/bootstrap.min.js}"></script>
+<link
+	th:href="@{css/select2.min.css}"
+	rel="stylesheet" />
+<script
+	th:src="@{js/select2.min.js}"></script>
+<!--[if lt IE 9]>
+	<script th:src="@{js/html5shiv.js}"></script>
+<![endif]-->
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+.toolbar-title {
+	color: white;
+}
+header{
+
+}
+#tabletoolbar {
+	position: fixed;
+	width: 100%;
+	background-color: black;
+	height: 60px;
+	opacity: 0.8;
+	bottom: 0;
+}
+
+#res {
+	margin-bottom:45px;
+}
+
+#tabletoolbar:hover {
+	
+}
+
+#tabletoolbar>.container {
+	margin-top: 20px;
+}
+
+.toolbar-btn {
+	width: 37px;
+	height: 30px;
+	font-size: 14pt;
+	color: black;
+}
+
+.fio-input {
+	
+}
+
+.rate-input {
+	
+}
+
+.percent-input {
+	
+}
+
+.toolbar-btn:hover {
+	color: green;
+}
+
+.input-control {
+	/*display: none*/
+	
+}
+
+
+
+#tabletoolbar:hover .input-control {
+	/*display: inline-block;*/
+	
+}
+.content{
+min-height: 760px;
+}
+.footer {
+	height: 60px;
+	width: 100%;
+	bottom: 0;
+}
+#trigger:hover>#tabletoolbar{
+	height:120px;
+}
+#trigger{
+	position: fixed;
+	width: 100%;
+	background-color: none;
+	height: 120px;
+	opacity: 1.0;
+	bottom: 0;
+}
+</style>
+</head>
+<body>
+	<header th:fragment="site-header">
+		<!-- Static navbar -->
+    <nav class="navbar navbar-inverse navbar-static-top text-center" style="height:120px;color:white">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" th:href="@{/}"><img th:src="@{images/ITMO_LOGO.svg}" width="96" height="96"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+     
+       
+          <h1>Учет рабочего времени сотрудников</h1></li>
+       
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+	</header>
+	<footer class="footer" th:fragment="site-footer" style="background-color: #222;height:80px">
+		<hr style="border-color:black;">
+      <div class="container text-center">
+      
+        <p style="color:white;" class="text-muted">Институт тепло-и массообмена имени А. В. Лыкова Национальной Академии Наук Беларуси<br>Лаборатория распределенных информационных систем &copy;Минск, 2017</p>
+        
+      </div>
+    </footer>
+	
+</body>
+</html>
+
+
