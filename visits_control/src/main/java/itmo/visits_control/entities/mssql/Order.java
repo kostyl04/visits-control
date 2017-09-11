@@ -78,4 +78,10 @@ public class Order {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Order [rateSize=" + rateSize + ", personalCode=" + personalCode + ", orderType=" + orderType
+				+ ", comeIntoForce=" + comeIntoForce + ", lastDate=" + lastDate + "]";
+	}
+
 }

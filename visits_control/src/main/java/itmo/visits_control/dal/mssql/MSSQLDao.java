@@ -2,6 +2,7 @@ package itmo.visits_control.dal.mssql;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import itmo.visits_control.dal.CrudDao;
@@ -13,7 +14,7 @@ import itmo.visits_control.models.Escape;
 public interface MSSQLDao extends CrudDao {
 	List<Department> getNotHiddenDepartments();
 
-	List<Person> getActualPersonal();
+	List<Person> getActualPersonal(LocalDate date);
 
 	List<Order> findActualOrders(BigDecimal rateSize, int personalCode, Date searchDate);
 

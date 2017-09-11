@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.format.datetime.standard.Jsr310DateTimeFormatAnnotationFormatterFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 
 import itmo.visits_control.components.PersonInfoBuilder;
 import itmo.visits_control.dal.firebird.FireBirdDao;
@@ -34,7 +36,7 @@ public class MainService {
 
 	public List<ResultModel> computeResults(int month, int year, List<String> personsJSON) throws Exception {
 		List<ResultModel> result = new ArrayList<>();
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper().registerModule(new JSR310Module());
 		List<Person> persons = new ArrayList(personsJSON.size());
 		try {
 			for (String pj : personsJSON) {

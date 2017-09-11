@@ -3,6 +3,7 @@ package itmo.visits_control.dal.mssql;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -10,15 +11,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import itmo.visits_control.entities.mssql.Department;
-import itmo.visits_control.entities.mssql.Mission;
 import itmo.visits_control.entities.mssql.Order;
 import itmo.visits_control.entities.mssql.Person;
 import itmo.visits_control.models.Escape;
@@ -84,12 +86,12 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Person> getActualPersonal() {
+	public List<Person> getActualPersonal(LocalDate date) {
 
 		String queryString = "select dismiss,name,patronymic,personalCode,surname,personDepartmentName=("
 				+ "select distinct top 1 departmentName from Departments d,Contracts c WHERE "
-				+ "c.personalCode=p.personalCode and d.DepartmentCode=c.DepartmentCode  " + ")  from personal p "
-				+ "where p.dismiss='false'" + "order by (surname);";
+				+ "c.personalCode=p.personalCode and d.DepartmentCode=c.DepartmentCode  " + "),DismissDate as disDate  from personal p "
+				+ " " + "order by (surname);";
 		Query query = currentSession().createNativeQuery(queryString, "PersonWithDepResult");
 		return query.getResultList();
 	}
@@ -97,7 +99,7 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 	@Override
 	public List<Order> findActualOrders(BigDecimal rateSize, int personalCode, Date searchDate) {
 		String queryString = "select  o from Order o "
-				+ "where o.rateSize=:rateSize and o.personalCode=:personalCode and o.comeIntoForce <=:firstDayOfNextMonth and ordertype!=6 and ordertype!=14 and ordertype!=7 "
+				+ "where o.rateSize=:rateSize and o.personalCode=:personalCode and o.comeIntoForce <:firstDayOfNextMonth and ordertype!=6 and ordertype!=14 and ordertype!=7 "
 				+ "order by(o.comeIntoForce) desc";
 		Query query = currentSession().createQuery(queryString);
 		query.setParameter("personalCode", personalCode);
@@ -109,7 +111,11 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 	@Override
 	public List<Order> checkOrderWorking(BigDecimal orderRate, int personalCode, Date orderDate, Date searchDate) {
 		String queryString = "select  o from Order o "
-				+ " where o.rateSize=:rateSize and o.personalCode=:personalCode and o.comeIntoForce <:searchDate and o.comeIntoForce>=:orderDate and ordertype=6 order by(o.comeIntoForce) desc";
+				+ " where o.rateSize=:rateSize and o.personalCode=:personalCode "
+				+ "and o.comeIntoForce <:searchDate "
+				+ "and o.comeIntoForce>=:orderDate "
+				+ "and ordertype=6 "
+				+ "order by(o.comeIntoForce) desc";
 		Query query = currentSession().createQuery(queryString);
 		query.setParameter("personalCode", personalCode);
 		query.setParameter("searchDate", searchDate);

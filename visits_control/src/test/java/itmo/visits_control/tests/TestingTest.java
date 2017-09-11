@@ -1,5 +1,6 @@
 package itmo.visits_control.tests;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,22 +96,28 @@ public class TestingTest {
 	 * firstDayOfNextMonth)); escapes.forEach(e->{
 	 * System.out.println(e.getType()); }); }
 	 */
+//	@Test
+//	public void getEscapes() throws Exception {
+//		long t=System.currentTimeMillis();
+//		List<Person> persons = mssqlDao.getActualPersonal();
+//		//Person person=mssqlDao.find(Person.class, 1981);
+//		List<PersonInfo> personsInfo = new ArrayList<>();
+//		//personsInfo.add(new PersonInfo(person.getPersonalCode(), person.getLastName(), person.getName(), person.getMiddleName()));
+//		persons.forEach(p -> {
+//			personsInfo.add(new PersonInfo(p.getPersonalCode(), p.getLastName(), p.getName(), p.getMiddleName()));
+//		});
+//		PersonInfoBuilder builder=regimeBuilder.buildMonthRegime(3, 2017);
+//		personsInfo.forEach(p->{
+//			builder.getListRegimeDays(p);
+//			System.out.println(p);
+//		});
+//		System.out.println(System.currentTimeMillis()-t);
+//		
+//	}
 	@Test
-	public void getEscapes() throws Exception {
-		long t=System.currentTimeMillis();
-		List<Person> persons = mssqlDao.getActualPersonal();
-		//Person person=mssqlDao.find(Person.class, 1981);
-		List<PersonInfo> personsInfo = new ArrayList<>();
-		//personsInfo.add(new PersonInfo(person.getPersonalCode(), person.getLastName(), person.getName(), person.getMiddleName()));
-		persons.forEach(p -> {
-			personsInfo.add(new PersonInfo(p.getPersonalCode(), p.getLastName(), p.getName(), p.getMiddleName()));
-		});
-		PersonInfoBuilder builder=regimeBuilder.buildMonthRegime(3, 2017);
-		personsInfo.forEach(p->{
-			builder.getListRegimeDays(p);
-			System.out.println(p);
-		});
-		System.out.println(System.currentTimeMillis()-t);
+	public void asd(){
+	List<Person> persons=mssqlDao.getActualPersonal(LocalDate.of(2017, 1, 1));
+	persons.forEach(System.out::println);
 		
 	}
 }

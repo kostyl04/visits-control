@@ -3,13 +3,27 @@ let monthSelect=$("#month");
 let yearSelect=$("#year");
 let departmentSelect=$("#dep");
 let personSelect=$("#person");
+
 window.onload = function() {
-	
+	console.log(yearSelect.value);
 	getformmodel();
 	$("#form").submit(function(){
 		if(personSelect.val().length==0){
 			$("#person option").prop("selected", "selected");}
 	});
+	var clearbtn=document.getElementById("clear");
+	clearbtn.onclick=function(){
+		var personSelect=document.getElementById("person");
+		var depSelect=document.getElementById("dep");
+		for(let opt of personSelect.options){
+			if(opt.selected)opt.selected=false;
+		}
+		for(let opt of depSelect.options){
+			if(opt.selected)opt.selected=false;
+		}
+		$("#dep").select2().change();
+		$("#person").select2().change();
+	};
 	
 
 }

@@ -1,6 +1,8 @@
 package itmo.visits_control.entities.mssql;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -11,6 +13,7 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @SqlResultSetMapping(name = "PersonWithDepResult", classes = {
 		@ConstructorResult(targetClass = Person.class, columns = { @ColumnResult(name = "dismiss"),
 				@ColumnResult(name = "name"), @ColumnResult(name = "patronymic"), @ColumnResult(name = "personalCode"),
-				@ColumnResult(name = "surname"), @ColumnResult(name = "personDepartmentName") }) })
+				@ColumnResult(name = "surname"), @ColumnResult(name = "personDepartmentName"),
+				@ColumnResult(name = "disDate") }) })
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -39,12 +43,14 @@ public class Person implements Serializable {
 	private String lastName;
 	@Transient
 	private String personDepartmentName;
+	@Transient
+	private LocalDate dismissDate;
 
 	public Person() {
 	}
 
 	public Person(boolean dismiss, String name, String middleName, int personalCode, String lastName,
-			String personDepartmentName) {
+			String personDepartmentName, String dismissDate) {
 		super();
 		this.dismiss = dismiss;
 		this.name = name;
@@ -52,6 +58,14 @@ public class Person implements Serializable {
 		this.personalCode = personalCode;
 		this.lastName = lastName;
 		this.personDepartmentName = personDepartmentName;
+		dismissDate = dismissDate.trim();
+		if (dismissDate == null || dismissDate.equals(""))
+			this.dismissDate = null;
+		else {
+			String[] arr = dismissDate.split("\\.");
+			this.dismissDate = LocalDate.parse(arr[2] + "-" + arr[1] + "-" + arr[0]);
+		}
+
 	}
 
 	public String getPersonDepartmentName() {
@@ -104,6 +118,14 @@ public class Person implements Serializable {
 
 	public String getFullName() {
 		return lastName + " " + name + " " + middleName;
+	}
+
+	public LocalDate getDismissDate() {
+		return dismissDate;
+	}
+
+	public void setDismissDate(LocalDate dismissDate) {
+		this.dismissDate = dismissDate;
 	}
 
 	@Override

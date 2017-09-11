@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="itmo.visits_control.tests.TestingTest" time="40.858" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="itmo.visits_control.tests.TestingTest" time="1.294" errors="1" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="D:\jdk1.8.0_71\jre\bin"/>
     <property name="java.vm.version" value="25.71-b15"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="D:\eclipseprojects\visits_control"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\Roman\git\visits-control\visits_control"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="D:\eclipseprojects\visits_control"/>
+    <property name="user.dir" value="C:\Users\Roman\git\visits-control\visits_control"/>
     <property name="java.runtime.version" value="1.8.0_71-b15"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="D:\jdk1.8.0_71\jre\lib\endorsed"/>
@@ -27,9 +27,9 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="classworlds.conf" value="D:\eclipseprojects\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf545900550178111345.tmp"/>
+    <property name="classworlds.conf" value="D:\eclipseprojects\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf7460586852160615042.tmp"/>
     <property name="sun.jnu.encoding" value="Cp1251"/>
-    <property name="java.library.path" value="D:\jdk1.8.0_71\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_121/bin/server;C:/Program Files/Java/jre1.8.0_121/bin;C:/Program Files/Java/jre1.8.0_121/lib/amd64;C:\ProgramData\Oracle\Java\javapath; D:\jdk1.8.0_71\bin;C:\Program Files (x86)\PC Connectivity Solution\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Graphviz2.30\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\nodejs\;C:\Users\Roman\AppData\Roaming\npm;C:\Users\Roman\Desktop;;."/>
+    <property name="java.library.path" value="D:\jdk1.8.0_71\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_121/bin/server;C:/Program Files/Java/jre1.8.0_121/bin;C:/Program Files/Java/jre1.8.0_121/lib/amd64;C:\ProgramData\Oracle\Java\javapath; D:\jdk1.8.0_71\bin;C:\Program Files (x86)\PC Connectivity Solution\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Graphviz2.30\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;C:\Program Files\nodejs\;C:\Program Files (x86)\Kaspersky Lab\Kaspersky Endpoint Security 10 for Windows SP1\;C:\Users\Roman\AppData\Roaming\npm;C:\Users\Roman\Desktop;;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -54,7 +54,7 @@
     <property name="java.ext.dirs" value="D:\jdk1.8.0_71\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
     <property name="sun.boot.class.path" value="D:\jdk1.8.0_71\jre\lib\resources.jar;D:\jdk1.8.0_71\jre\lib\rt.jar;D:\jdk1.8.0_71\jre\lib\sunrsasign.jar;D:\jdk1.8.0_71\jre\lib\jsse.jar;D:\jdk1.8.0_71\jre\lib\jce.jar;D:\jdk1.8.0_71\jre\lib\charsets.jar;D:\jdk1.8.0_71\jre\lib\jfr.jar;D:\jdk1.8.0_71\jre\classes"/>
     <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="maven.home" value="D:\eclipseprojects\visits_control\EMBEDDED"/>
+    <property name="maven.home" value="C:\Users\Roman\git\visits-control\visits_control\EMBEDDED"/>
     <property name="file.separator" value="\"/>
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -62,5 +62,131 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="itmo.visits_control.tests.TestingTest" name="getEscapes" time="40.858"/>
+  <testcase classname="itmo.visits_control.tests.TestingTest" name="asd" time="1.294">
+    <error message="Could not locate appropriate constructor on class : itmo.visits_control.entities.mssql.Person" type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: Could not locate appropriate constructor on class : itmo.visits_control.entities.mssql.Person
+	at org.hibernate.loader.custom.ConstructorResultColumnProcessor.resolveConstructor(ConstructorResultColumnProcessor.java:92)
+	at org.hibernate.loader.custom.ConstructorResultColumnProcessor.performDiscovery(ConstructorResultColumnProcessor.java:45)
+	at org.hibernate.loader.custom.CustomLoader.autoDiscoverTypes(CustomLoader.java:486)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:2131)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1911)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1887)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:932)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:349)
+	at org.hibernate.loader.Loader.doList(Loader.java:2615)
+	at org.hibernate.loader.Loader.doList(Loader.java:2598)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2430)
+	at org.hibernate.loader.Loader.list(Loader.java:2425)
+	at org.hibernate.loader.custom.CustomLoader.list(CustomLoader.java:335)
+	at org.hibernate.internal.SessionImpl.listCustomQuery(SessionImpl.java:2160)
+	at org.hibernate.internal.AbstractSharedSessionContract.list(AbstractSharedSessionContract.java:992)
+	at org.hibernate.query.internal.NativeQueryImpl.doList(NativeQueryImpl.java:148)
+	at org.hibernate.query.internal.AbstractProducedQuery.list(AbstractProducedQuery.java:1414)
+	at org.hibernate.query.Query.getResultList(Query.java:146)
+	at itmo.visits_control.dal.mssql.MSSQLCrudDaoBean.getActualPersonal(MSSQLCrudDaoBean.java:96)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:333)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:213)
+	at com.sun.proxy.$Proxy50.getActualPersonal(Unknown Source)
+	at itmo.visits_control.tests.TestingTest.asd(TestingTest.java:119)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:252)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:236)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:134)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:103)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:74)
+</error>
+    <system-err>сен 11, 2017 1:54:37 PM org.springframework.test.context.web.WebTestContextBootstrapper getDefaultTestExecutionListenerClassNames
+INFO: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+сен 11, 2017 1:54:37 PM org.springframework.test.context.web.WebTestContextBootstrapper getTestExecutionListeners
+INFO: Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1ed4004b, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@ff5b51f, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@25bbe1b6, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5702b3b1, org.springframework.test.context.transaction.TransactionalTestExecutionListener@69ea3742, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@4b952a2d]
+сен 11, 2017 1:54:37 PM org.springframework.web.context.support.GenericWebApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.web.context.support.GenericWebApplicationContext@610694f1: startup date [Mon Sep 11 13:54:37 GMT+02:00 2017]; root of context hierarchy
+сен 11, 2017 1:54:38 PM org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor &lt;init&gt;
+INFO: JSR-330 &apos;javax.inject.Inject&apos; annotation found and supported for autowiring
+сен 11, 2017 1:54:39 PM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {5.2.10.Final}
+сен 11, 2017 1:54:39 PM org.hibernate.cfg.Environment &lt;clinit&gt;
+INFO: HHH000206: hibernate.properties not found
+сен 11, 2017 1:54:39 PM org.hibernate.annotations.common.reflection.java.JavaReflectionManager &lt;clinit&gt;
+INFO: HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+сен 11, 2017 1:54:40 PM org.hibernate.dialect.Dialect &lt;init&gt;
+INFO: HHH000400: Using dialect: org.hibernate.dialect.SQLServerDialect
+сен 11, 2017 1:54:43 PM org.hibernate.hql.internal.QueryTranslatorFactoryInitiator initiateService
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+сен 11, 2017 1:54:46 PM org.hibernate.dialect.Dialect &lt;init&gt;
+INFO: HHH000400: Using dialect: org.hibernate.dialect.FirebirdDialect
+сен 11, 2017 1:54:49 PM org.hibernate.hql.internal.QueryTranslatorFactoryInitiator initiateService
+INFO: HHH000397: Using ASTQueryTranslatorFactory
+сен 11, 2017 1:54:49 PM org.springframework.orm.hibernate5.HibernateTransactionManager afterPropertiesSet
+INFO: Using DataSource [org.apache.commons.dbcp.BasicDataSource@11e33bac] of Hibernate SessionFactory for HibernateTransactionManager
+сен 11, 2017 1:54:49 PM org.springframework.orm.hibernate5.HibernateTransactionManager afterPropertiesSet
+INFO: Using DataSource [org.apache.commons.dbcp.BasicDataSource@2ab4bc72] of Hibernate SessionFactory for HibernateTransactionManager
+сен 11, 2017 1:54:49 PM org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping register
+INFO: Mapped &quot;{[/api/getstartform],consumes=[application/json],produces=[application/json;charset=UTF-8]}&quot; onto public itmo.visits_control.models.StartForm itmo.visits_control.controllers.FormRestController.getStartForm()
+сен 11, 2017 1:54:49 PM org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping register
+INFO: Mapped &quot;{[/]}&quot; onto public org.springframework.web.servlet.ModelAndView itmo.visits_control.controllers.MainController.main()
+сен 11, 2017 1:54:49 PM org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping register
+INFO: Mapped &quot;{[/result],consumes=[application/x-www-form-urlencoded;charset=UTF-8]}&quot; onto public org.springframework.web.servlet.ModelAndView itmo.visits_control.controllers.MainController.result(itmo.visits_control.models.FormCommandModel) throws java.lang.Exception
+сен 11, 2017 1:54:49 PM org.springframework.web.servlet.handler.SimpleUrlHandlerMapping registerHandler
+INFO: Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+сен 11, 2017 1:54:50 PM org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter initControllerAdviceCache
+INFO: Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@610694f1: startup date [Mon Sep 11 13:54:37 GMT+02:00 2017]; root of context hierarchy
+сен 11, 2017 1:54:50 PM org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver initExceptionHandlerAdviceCache
+INFO: Detected @ExceptionHandler methods in exceptionHandlingController
+SLF4J: Failed to load class &quot;org.slf4j.impl.StaticLoggerBinder&quot;.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+сен 11, 2017 1:54:52 PM org.hibernate.engine.internal.StatisticalLoggingSessionEventListener end
+INFO: Session Metrics {
+    114899 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    3748342 nanoseconds spent preparing 1 JDBC statements;
+    64262364 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    200767 nanoseconds spent executing 1 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+</system-err>
+  </testcase>
 </testsuite>

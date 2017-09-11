@@ -151,10 +151,13 @@ public class PersonInfoBuilder {
 			if (!tempOrders.isEmpty())
 				orders.add(tempOrders.get(0));
 		}
+		for (Order o : orders)
+			System.out.println(o);
 		Iterator<Order> it = orders.iterator();
 		while (it.hasNext()) {
 			Order o = it.next();
-			boolean orderIsActual = checkOrderWorking(o.getPersonalCode(), date, o.getComeIntoForce(), o.getRateSize());
+			boolean orderIsActual = checkOrderWorking(o.getPersonalCode(), Date.valueOf(this.date),
+					o.getComeIntoForce(), o.getRateSize());
 			if (!orderIsActual) {
 				it.remove();
 			}
@@ -164,7 +167,10 @@ public class PersonInfoBuilder {
 	}
 
 	private boolean checkOrderWorking(int personalCode, Date searchDate, Date orderDate, BigDecimal orderRate) {
-		return mssqlDao.checkOrderWorking(orderRate, personalCode, orderDate, searchDate).isEmpty() ? true : false;
+		List<Order> list = mssqlDao.checkOrderWorking(orderRate, personalCode, orderDate, searchDate);
+		for (Order o : list)
+			System.out.println(o);
+		return list.isEmpty();
 	}
 
 	private List<Escape> getEscapes(int personalCode) {
@@ -183,8 +189,7 @@ public class PersonInfoBuilder {
 		this.dayWorkingTime = parseWorkRegime();
 		this.date = LocalDate.of(year, month, 1);
 		if (!workingRegimeStringIsValid(this.regimeString)) {
-			throw new DataException(
-					"Не удалось получить режим работы за "+month+" месяц, "+year+" год!" );
+			throw new DataException("Не удалось получить режим работы за " + month + " месяц, " + year + " год!");
 		}
 
 		return this;

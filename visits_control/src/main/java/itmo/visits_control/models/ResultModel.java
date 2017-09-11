@@ -6,9 +6,9 @@ public class ResultModel {
 	private String depName;
 	private List<PersonInfo> personsInfo;
 
-	public ResultModel(String depName, List<PersonInfo> personsInfo) {
+	public ResultModel( String depName,List<PersonInfo> personsInfo) {
 		super();
-		this.depName = depName;
+		this.depName=depName;
 		this.personsInfo = personsInfo;
 	}
 

@@ -54,7 +54,7 @@
 						<div th:if="${person.status.isOk()}">
 							<tr>
 								<td th:text="${it.count+'.'+iter.count}"></td>
-								<td class="fiocol" id="fiocol" th:text="${person.getFullName()}"></td>
+								<td style="width:5px;" class="fiocol text-left"  id="fiocol" th:text="${person.getFullName()}"></td>
 								<td class="ratecol" id="ratecol" th:text="${person.rateSize}"></td>
 								<td th:text="${person.fullReqieredHours}"></td>
 								<td th:text="${person.workedOutHours}"></td>
@@ -72,7 +72,7 @@
 						<div th:if="${!person.status.isOk()}">
 							<tr>
 								<td th:text="${it.count+'.'+iter.count}"></td>
-								<td class="fiocol" id="fiocol" colspan="1"
+								<td class="fiocol text-left" id="fiocol" style="width:10%" colspan="1"
 									th:text="${person.fullName}"></td>
 								<td class="ratecol" id="ratecol" colspan="5"
 									th:text="${person.rateSize}"></td>
@@ -91,7 +91,7 @@
 
 
 		<div class="tabletoolbar text-center" id="tabletoolbar">
-			<h2 class="toolbar-title">Панель управления</h2>
+			<h2 class="toolbar-title">Указать фильтры для отображения результатов</h2>
 			<div class="container text-center">
 				<div class="form-inline">
 					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
