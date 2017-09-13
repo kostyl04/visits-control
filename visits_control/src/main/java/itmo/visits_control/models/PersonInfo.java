@@ -15,6 +15,15 @@ public class PersonInfo {
 	private long disabilityHours;
 	private long missionHours;
 	private PersonInfoStatus status = PersonInfoStatus.Ok;
+	private List<String> personDeps;
+	
+	public List<String> getPersonDeps() {
+		return personDeps;
+	}
+
+	public void setPersonDeps(List<String> personDeps) {
+		this.personDeps = personDeps;
+	}
 
 	public PersonInfoStatus getStatus() {
 		return status;
@@ -143,15 +152,30 @@ public class PersonInfo {
 	public String getFullName() {
 		return this.lastName + " " + this.name + " " + this.middleName;
 	}
-	public long getWorkedOutPercent(){
-		return this.fullReqieredHours!=0?(long)(1d*this.workedOutHours/this.fullReqieredHours*100):0;
-	}
-	public long getNotWorkedHours(){
-		return Math.max(0, this.fullReqieredHours-this.workedOutHours-leaveHours-missionHours-disabilityHours);
-	}
-	public long getNotWorkedHoursPercent(){
-		long closedHours=this.workedOutHours+leaveHours+missionHours+disabilityHours;
-		return this.fullReqieredHours!=0?Math.max(0,(long)(100-1d*closedHours/this.fullReqieredHours*100)):0;
+
+	public long getWorkedOutPercent() {
+		return this.fullReqieredHours != 0 ? (long) (1d * this.workedOutHours / this.fullReqieredHours * 100) : 0;
 	}
 
+	public long getNotWorkedHours() {
+		return Math.max(0, this.fullReqieredHours - this.workedOutHours - leaveHours - missionHours - disabilityHours);
+	}
+
+	public long getNotWorkedHoursPercent() {
+		long closedHours = this.workedOutHours + leaveHours + missionHours + disabilityHours;
+		return this.fullReqieredHours != 0 ? Math.max(0, (long) (100 - 1d * closedHours / this.fullReqieredHours * 100))
+				: 0;
+	}
+
+	public boolean isLeaver() {
+		if (getNotWorkedHoursPercent() > 39)
+			return true;
+		return false;
+	}
+	public String getDepsTitle(){
+		String s="";
+		for(String d:personDeps)
+			s+=d+"\n";
+		return s;
+	}
 }

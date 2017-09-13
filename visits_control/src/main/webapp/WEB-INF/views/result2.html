@@ -1,0 +1,137 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="imports/template :: site-head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+
+<body>
+	<header th:replace="imports/template :: site-header" />
+
+
+	<div class="container text-center content" id="res">
+		<h2 th:text="${titleString}"></h2>
+		<table
+			class="table   table-striped  table-bordered scrollable table-container"
+			style="font-size: 12pt; padding: 0px;" id="table-results">
+			<thead class="header">
+				<tr>
+					<th rowspan="3" style="vertical-align: middle">#</th>
+					<th rowspan="3" class="col-md-6" style="vertical-align: middle">ФИО</th>
+					<th rowspan="3" style="vertical-align: middle">Ставка</th>
+					<th rowspan="3" style="vertical-align: middle">Подразделения</th>
+					<th rowspan="3" style="vertical-align: middle">Рабочий план,
+						часов</th>
+					<th colspan="2" rowspan="2" style="vertical-align: middle">Отработано</th>
+					<th colspan="5">Неявки на работу</th>
+				</tr>
+				<tr>
+
+					<th colspan="1" rowspan="2" style="vertical-align: middle">Отпуск</th>
+					<th colspan="1" rowspan="2" style="vertical-align: middle">Больничный</th>
+					<th colspan="1" rowspan="2" style="vertical-align: middle">Командировка</th>
+					<th colspan="2">Без причины</th>
+				</tr>
+				<tr>
+					<th>Часы</th>
+					<th>%</th>
+
+					<th>Часы</th>
+					<th>%</th>
+
+				</tr>
+			</thead>
+			<tbody id="table-results-body">
+				<div th:each="person, it:${results}">
+					<div th:if="${person.status.isOk()}">
+						<tr>
+							<td th:text="${it.count}"></td>
+							<td style="width: 5px;" class="fiocol text-left" id="fiocol"
+								th:text="${person.getFullName()}"></td>
+							<td class="ratecol" id="ratecol" th:text="${person.rateSize}"
+								th:title="${person.getDepsTitle()}"></td>
+							<td th:text="${person.getDepsTitle()}"></td>
+							<td th:text="${person.fullReqieredHours}"></td>
+							<td th:text="${person.workedOutHours}"></td>
+							<td th:text="${person.getWorkedOutPercent()}"></td>
+
+							<td th:text="${person.leaveHours}"></td>
+							<td th:text="${person.disabilityHours}"></td>
+							<td th:text="${person.missionHours}"></td>
+
+							<td th:text="${person.getNotWorkedHours()}"></td>
+							<td th:class="${person.isLeaver()?'danger':''+' percentcol'}"
+								id="percentcol"
+								th:text="${person.getNotWorkedHoursPercent()+'%'}"></td>
+						</tr>
+					</div>
+					<div th:if="${!person.status.isOk()}">
+						<tr>
+							<td th:text="${it.count}"></td>
+							<td class="fiocol text-left" id="fiocol" style="width: 10%"
+								colspan="1" th:text="${person.fullName}"></td>
+							<td class="ratecol" id="ratecol" colspan="5"
+								th:text="${person.rateSize}"></td>
+							<td colspan="5" th:text="${person.status.message}"></td>
+						</tr>
+					</div>
+
+
+
+				</div>
+			</tbody>
+			</div>
+		</table>
+	</div>
+	<div class="text-center" style="opacity: 1.0;" id="trigger">
+
+
+		<div class="tabletoolbar text-center" id="tabletoolbar">
+			<h2 class="toolbar-title">Указать фильтры для отображения
+				результатов</h2>
+			<div class="container text-center">
+				<div class="form-inline">
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">
+							<span class="glyphicon glyphicon-user"></span>
+						</div>
+						<input type="text" class="form-control fio-input" id="fio-input"
+							placeholder="Поиск по ФИО" title="Поиск по ФИО">
+					</div>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">
+							<span class="glyphicon glyphicon-signal "></span>
+						</div>
+						<input type="number" class="form-control rate-input"
+							id="rate-input" step="0.25" min="0" max="1.75"
+							placeholder="Ставка больше"
+							title="Показать тех у кого ставка больше">
+					</div>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">
+							<span class="glyphicon glyphicon-warning-sign "></span>
+						</div>
+						<input type="number" class="form-control percent-input"
+							id="percent-input" step="5" min="0" max="100"
+							placeholder="Пропустил больше %"
+							title="Показать тех кто пропустил больше %">
+					</div>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">
+							<span class="glyphicon glyphicon-home"></span>
+						</div>
+						<input type="text" class="form-control fio-input" id="dep-input"
+							placeholder="Поиск по подразделениям" title="Поиск по ФИО">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{js/filter.js}"></script>
+	<script>
+		
+	</script>
+	<footer th:replace="imports/template :: site-footer" />
+</body>
+</html>

@@ -42,6 +42,7 @@ public class PersonInfoBuilder {
 	private LocalDate date;
 	private static final BigDecimal[] rateSizes = new BigDecimal[] { new BigDecimal(0.25), new BigDecimal(0.5),
 			new BigDecimal(1) };
+	private double rateProperty;
 
 	public void getListRegimeDays(PersonInfo personInfo) {
 		long fullReqieredHours;
@@ -65,7 +66,7 @@ public class PersonInfoBuilder {
 		for (Order o : orders) {
 			fullMonthRate += o.getRateSize().doubleValue();
 		}
-		fullReqieredHours *= fullMonthRate;
+		fullReqieredHours *= fullMonthRate>rateProperty?rateProperty:fullMonthRate;
 		for (int i = 0; i < days.size(); i++) {
 			LocalDate tempDate = date.plusDays(i);
 			Double rate = 0d;
@@ -76,6 +77,7 @@ public class PersonInfoBuilder {
 				rate += o.getDayRate(tempDate).doubleValue();
 
 			}
+			rate = rate > rateProperty ? rateProperty : rate;
 
 			for (Escape e : escapes) {
 				long l = (long) (days.get(i).toMillis() * rate);
@@ -106,9 +108,12 @@ public class PersonInfoBuilder {
 		} else {
 			personInfo.setStatus(PersonInfoStatus.NotFoundInVisits);
 		}
+		List<String> personDeps=new ArrayList();
 		leaveHours = leaveDuration.toHours();
 		disabilityHours = disabilityDuration.toHours();
 		missionHours = missionDuration.toHours();
+		
+		personInfo.setPersonDeps(mssqlDao.getPersonDeppartments(personInfo.getPersonalCode(),Date.valueOf(this.date)));
 		personInfo.setDisabilityHours(disabilityHours);
 		personInfo.setFullReqieredHours(fullReqieredHours);
 		personInfo.setLeaveHours(leaveHours);
@@ -184,14 +189,14 @@ public class PersonInfoBuilder {
 		return escapes;
 	}
 
-	public PersonInfoBuilder buildMonthRegime(int month, int year) {
+	public PersonInfoBuilder buildMonthRegime(int month, int year, double rateProperty) {
 		this.regimeString = mssqlDao.getWorkRegimes(year, month);
 		this.dayWorkingTime = parseWorkRegime();
 		this.date = LocalDate.of(year, month, 1);
 		if (!workingRegimeStringIsValid(this.regimeString)) {
 			throw new DataException("Не удалось получить режим работы за " + month + " месяц, " + year + " год!");
 		}
-
+		this.rateProperty = rateProperty;
 		return this;
 	}
 

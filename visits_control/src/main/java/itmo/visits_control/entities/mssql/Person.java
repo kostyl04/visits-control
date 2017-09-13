@@ -127,7 +127,7 @@ public class Person implements Serializable {
 	public void setDismissDate(LocalDate dismissDate) {
 		this.dismissDate = dismissDate;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Person [dismiss=" + dismiss + ", name=" + name + ", middleName=" + middleName + ", personalCode="

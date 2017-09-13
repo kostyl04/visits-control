@@ -2,17 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="site-head">
 <meta charset="UTF-8" />
-<link rel="stylesheet"
-	th:href="@{css/bootstrap.min.css}">
-<script
-	th:src="@{js/jquery.min.js}"></script>
-<script
-	th:src="@{js/bootstrap.min.js}"></script>
-<link
-	th:href="@{css/select2.min.css}"
-	rel="stylesheet" />
-<script
-	th:src="@{js/select2.min.js}"></script>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+<script th:src="@{js/jquery.min.js}"></script>
+<script th:src="@{js/bootstrap.min.js}"></script>
+<link th:href="@{css/select2.min.css}" rel="stylesheet" />
+<script th:src="@{js/select2.min.js}"></script>
 <!--[if lt IE 9]>
 	<script th:src="@{js/html5shiv.js}"></script>
 <![endif]-->
@@ -22,12 +16,17 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <style>
-.toolbar-title {
-	color: white;
-}
-header{
 
+
+
+
+
+
+
+header {
+	
 }
+
 #tabletoolbar {
 	position: fixed;
 	width: 100%;
@@ -38,7 +37,7 @@ header{
 }
 
 #res {
-	margin-bottom:45px;
+	margin-bottom: 45px;
 }
 
 #tabletoolbar:hover {
@@ -77,24 +76,26 @@ header{
 	
 }
 
-
-
 #tabletoolbar:hover .input-control {
 	/*display: inline-block;*/
 	
 }
-.content{
-min-height: 760px;
+
+.content {
+	min-height: 760px;
 }
+
 .footer {
 	height: 60px;
 	width: 100%;
 	bottom: 0;
 }
-#trigger:hover>#tabletoolbar{
-	height:120px;
+
+#trigger:hover>#tabletoolbar {
+	height: 120px;
 }
-#trigger{
+
+#trigger {
 	position: fixed;
 	width: 100%;
 	background-color: none;
@@ -107,29 +108,38 @@ min-height: 760px;
 <body>
 	<header th:fragment="site-header">
 		<!-- Static navbar -->
-    <nav class="navbar navbar-inverse navbar-static-top text-center" style="height:120px;color:white">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" th:href="@{/}"><img th:src="@{images/ITMO_LOGO.svg}" width="96" height="96"></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-     
-       
-          <h1>Учет рабочего времени сотрудников</h1></li>
-       
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+		<nav class="navbar navbar-inverse navbar-static-top text-center"
+			style="height: 120px; color: white">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" th:href="@{/}"><img
+						th:src="@{images/ITMO_LOGO.svg}" width="96" height="96"></a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+
+
+					<h1>Учет рабочего времени сотрудников</h1>
+					</li>
+
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</nav>
 	</header>
-	<footer class="footer" th:fragment="site-footer" style="background-color: #222;height:80px">
-		<hr style="border-color:black;">
-      <div class="container text-center">
-      
-        <p style="color:white;" class="text-muted">Институт тепло-и массообмена имени А. В. Лыкова Национальной Академии Наук Беларуси<br>Лаборатория распределенных информационных систем &copy;Минск, 2017</p>
-        
-      </div>
-    </footer>
-	
+	<footer class="footer" th:fragment="site-footer"
+		style="background-color: #222; height: 80px">
+		<hr style="border-color: black;">
+		<div class="container text-center">
+
+			<p style="color: white;" class="text-muted">
+				Институт тепло-и массообмена имени А. В. Лыкова Национальной
+				Академии Наук Беларуси<br>Лаборатория распределенных
+				информационных систем &copy;Минск, 2017
+			</p>
+
+		</div>
+	</footer>
+
 </body>
 </html>
 

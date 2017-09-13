@@ -25,7 +25,6 @@ import itmo.visits_control.entities.mssql.Order;
 import itmo.visits_control.entities.mssql.Person;
 import itmo.visits_control.models.Escape;
 
-
 @Repository(value = "MSSQLDao")
 @Transactional(value = "mssqlTX")
 public class MSSQLCrudDaoBean implements MSSQLDao {
@@ -72,7 +71,7 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 
 	protected Session currentSession() {
 		Session currentSession = sessionFactory.getCurrentSession();
-		//Session currentSession = sessionFactory.openSession();
+		// Session currentSession = sessionFactory.openSession();
 		return currentSession;
 	}
 
@@ -89,9 +88,10 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 	public List<Person> getActualPersonal(LocalDate date) {
 
 		String queryString = "select dismiss,name,patronymic,personalCode,surname,personDepartmentName=("
-				+ "select distinct top 1 departmentName from Departments d,Contracts c WHERE "
-				+ "c.personalCode=p.personalCode and d.DepartmentCode=c.DepartmentCode  " + "),DismissDate as disDate  from personal p "
-				+ " " + "order by (surname);";
+				+ "select top 1 departmentName from Departments d,Contracts c WHERE "
+				+ "c.personalCode=p.personalCode and d.DepartmentCode=c.DepartmentCode "
+				+ "and c.istate=0 and d.hidden='false' order by(c.contractStart) "
+				+ "),DismissDate as disDate  from personal p " + " " + "order by (surname);";
 		Query query = currentSession().createNativeQuery(queryString, "PersonWithDepResult");
 		return query.getResultList();
 	}
@@ -110,11 +110,8 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 
 	@Override
 	public List<Order> checkOrderWorking(BigDecimal orderRate, int personalCode, Date orderDate, Date searchDate) {
-		String queryString = "select  o from Order o "
-				+ " where o.rateSize=:rateSize and o.personalCode=:personalCode "
-				+ "and o.comeIntoForce <:searchDate "
-				+ "and o.comeIntoForce>=:orderDate "
-				+ "and ordertype=6 "
+		String queryString = "select  o from Order o " + " where o.rateSize=:rateSize and o.personalCode=:personalCode "
+				+ "and o.comeIntoForce <:searchDate " + "and o.comeIntoForce>=:orderDate " + "and ordertype=6 "
 				+ "order by(o.comeIntoForce) desc";
 		Query query = currentSession().createQuery(queryString);
 		query.setParameter("personalCode", personalCode);
@@ -157,7 +154,7 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 	}
 
 	@Override
-	public List<Escape> getPersonDisabilities(int personalCode,Date firstDayOfMonth, Date firstDayOfNextMonth) {
+	public List<Escape> getPersonDisabilities(int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth) {
 		Query query = currentSession().createNamedQuery("Personal.getDisabilities");
 		query.setParameter("personalCode", personalCode);
 		query.setParameter("firstDayOfMonth", firstDayOfMonth);
@@ -173,6 +170,20 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 		query.setParameter("firstDayOfMonth", firstDayOfMonth);
 		query.setParameter("firstDayOfNextMonth", firstDayOfNextMonth);
 
+		return query.getResultList();
+	}
+	
+	public List<String> getPersonDeppartments(final int personalCode,Date firstDayOfMonth){
+		String queryString = 
+				 "select  distinct departmentName from Departments d,Contracts c WHERE "
+				+ " c.personalCode=:personalCode"
+				+ " and d.DepartmentCode=c.DepartmentCode "
+				+" and c.contractEnd>=:firstDayOfMonth "
+				+ " and d.hidden='false' ";
+		Query query = currentSession().createNativeQuery(queryString);
+		query.setParameter("personalCode", personalCode);
+		query.setParameter("firstDayOfMonth", firstDayOfMonth);
+		
 		return query.getResultList();
 	}
 

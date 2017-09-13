@@ -34,8 +34,11 @@ public class MainService {
 	@Autowired
 	private PersonInfoBuilder builder;
 
-	public List<ResultModel> computeResults(int month, int year, List<String> personsJSON) throws Exception {
+	public List<ResultModel> computeResults(int month, int year, List<String> personsJSON, double rateProperty)
+			throws Exception {
+		rateProperty = rateProperty == 0 ? 2 : rateProperty;
 		List<ResultModel> result = new ArrayList<>();
+
 		ObjectMapper mapper = new ObjectMapper().registerModule(new JSR310Module());
 		List<Person> persons = new ArrayList(personsJSON.size());
 		try {
@@ -61,7 +64,7 @@ public class MainService {
 		})).forEach((k, v) -> {
 			result.add(new ResultModel(k, v));
 		});
-		PersonInfoBuilder builder = this.builder.buildMonthRegime(month, year);
+		PersonInfoBuilder builder = this.builder.buildMonthRegime(month, year, rateProperty);
 		result.forEach(r -> {
 			r.getPersonsInfo().forEach(p -> {
 				try {

@@ -114,10 +114,17 @@ public class TestingTest {
 //		System.out.println(System.currentTimeMillis()-t);
 //		
 //	}
+//	@Test
+//	public void asd(){
+//	List<Person> persons=mssqlDao.getActualPersonal(LocalDate.of(2017, 1, 1));
+//	persons.forEach(System.out::println);
+//		
+//	}
+	
 	@Test
-	public void asd(){
-	List<Person> persons=mssqlDao.getActualPersonal(LocalDate.of(2017, 1, 1));
-	persons.forEach(System.out::println);
-		
+	public void getDepartments(){
+		int code = 438;
+		List<String> res = mssqlDao.getPersonDeppartments(code);
+		res.forEach(System.out::println);
 	}
 }

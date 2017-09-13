@@ -1,9 +1,11 @@
 /**
-	   * FILTER CREATED BY ROMAN KOSTYL VERSION 1.0 PATTERN CHAIN OF RESPONSOBILITIES
-	   */
+ * FILTER CREATED BY ROMAN KOSTYL VERSION 1.0 PATTERN CHAIN OF RESPONSOBILITIES
+ */
 	  var fioinput = document.getElementById("fio-input");
 	  var rateinput = document.getElementById("rate-input");
 	  var percentinput = document.getElementById("percent-input");
+	  var depinput = document.getElementById("dep-input");
+	  
 
 
 	  var fiocol = document.getElementsByClassName("fiocol");
@@ -27,16 +29,18 @@
 	      filterChain.doChain();
 
 	  };
+	  depinput.onkeyup = function() {
+	      filterChain.doChain();
+
+	  };
 
 	  function filterChain() {
-	      this.filters = [new fullNameFilter(), new rateSizeFilter(), new percentFilter()];
+	      this.startFilter = new fullNameFilter();
 	      this.doChain = function() {
 	          this.reset();
 	          for (let tr of trs) {
 	              for (let td of tr.getElementsByTagName("td")) {
-	                  for (let filter of this.filters) {
-	                      filter.filter(td);
-	                  }
+	                	 this.startFilter.filter(td);    
 	              }
 	          }
 	          this.removeUselessDeps();
@@ -92,7 +96,9 @@
 	      this.nextFilter = new percentFilter();
 	      this.filter = function(td) {
 	          var filter = Number(rateinput.value);
-	          if (td.id == "ratecol" && Number(td.innerHTML) < filter) {
+	         
+	          // if(Number(td.innerHTML)!=0)
+	          if (td.id == "ratecol" && Number(td.innerHTML) != filter&&filter!=0) {
 	              td.parentNode.style.display = "none";
 
 	          } else if (this.nextFilter) this.nextFilter.filter(td);
@@ -102,10 +108,21 @@
 	  };
 
 	  function percentFilter() {
-
+		  this.nextFilter = new depFilter();
 	      this.filter = function(td) {
 	          var filter = Number(percentinput.value);
-	          if (td.id == "percentcol" && Number(td.innerHTML) < filter) {
+	          if (td.id == "percentcol" && Number(td.innerHTML.split("%")[0]) < filter) {
+	              td.parentNode.style.display = "none";
+
+	          } else if (this.nextFilter) this.nextFilter.filter(td);
+
+	      }
+	  };
+	  function depFilter() {
+
+	      this.filter = function(td) {
+	          var filter = depinput.value;
+	          if (td.id == "ratecol" && td.title.toUpperCase().indexOf(filter.toUpperCase()) == -1) {
 	              td.parentNode.style.display = "none";
 
 	          } else if (this.nextFilter) this.nextFilter.filter(td);
