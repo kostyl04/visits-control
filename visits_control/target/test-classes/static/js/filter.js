@@ -6,7 +6,26 @@
 	  var percentinput = document.getElementById("percent-input");
 	  var depinput = document.getElementById("dep-input");
 	  
-
+	  var dep_names_list = document.getElementById("departments_names");
+	    function DepSet(){
+	    	this.set = [];
+	    }
+	    DepSet.prototype.add = function(value){
+	    	if (this.set.indexOf(value) == -1){ 
+	    		  this.set.push(value);
+	    	}
+	    }  
+	    DepSet.prototype.clear = function(){
+	    	this.set = [];
+	    }
+	    DepSet.prototype.values = function(){
+	    	return this.set;
+	    }
+	    DepSet.prototype.containce= function(_val){
+	    	return this.set.indexOf(_value) == -1?false:true;
+	    }
+	    
+	  var DepartmentNamesSet = new DepSet(); 
 
 	  var fiocol = document.getElementsByClassName("fiocol");
 	  var ratecol = document.getElementsByClassName("ratecol");
@@ -31,8 +50,36 @@
 	  };
 	  depinput.onkeyup = function() {
 	      filterChain.doChain();
-
 	  };
+	  document.querySelector('input[list="departments_names"]').addEventListener('input', function(){
+		  filterChain.doChain();
+	  });
+	  document.getElementsByClassName("btn-clear-deps-input")[0].onclick=function(){
+		  depinput.value='';
+		  filterChain.doChain();
+	  }
+//	  var saved_onload = window.onload;
+	  window.onload = function(){
+		  pdf_creator_init();
+		  dep_names_list.innerHTML = '';
+      	  var options = '';
+      	  
+		  for (let tr of trs) {
+              for (let td of tr.getElementsByTagName("td")) {
+            	  if( !(td.id == "ratecol" ) ) continue; 
+              
+            	  for(var sub of td.title.toUpperCase().trim().split('\n')){
+            		  DepartmentNamesSet.add(sub);
+            	  }
+          	
+            	  }
+              }
+		  for(var val of DepartmentNamesSet.values()){
+      		  options += '<option value="'+val+'" />';
+      	  }
+      	  dep_names_list.innerHTML = options;
+		  
+	  }
 
 	  function filterChain() {
 	      this.startFilter = new fullNameFilter();
@@ -125,7 +172,27 @@
 	          if (td.id == "ratecol" && td.title.toUpperCase().indexOf(filter.toUpperCase()) == -1) {
 	              td.parentNode.style.display = "none";
 
-	          } else if (this.nextFilter) this.nextFilter.filter(td);
+	          } else {  
+	        	 
+	          	  
+	        	  if (this.nextFilter) this.nextFilter.filter(td);
+	          }
 
 	      }
+	   
+
+	    
+//	    var set = new DepSet();  
+//	    set.add('отдел');
+//	    set.add('отдел гидро');
+//	    set.add('отдел гидродина');
+//	    set.clear();
+//	    set.add('3');
+//	    for(var val of set.values()){
+//	    	console.log(val);
+//	    }
+//	      
+	      
+	      
+	      
 	  };

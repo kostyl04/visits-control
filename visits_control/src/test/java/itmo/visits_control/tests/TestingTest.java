@@ -121,10 +121,10 @@ public class TestingTest {
 //		
 //	}
 	
-	@Test
-	public void getDepartments(){
-		int code = 438;
-		List<String> res = mssqlDao.getPersonDeppartments(code);
-		res.forEach(System.out::println);
-	}
+//	@Test
+//	public void getDepartments(){
+//		int code = 438;
+//		List<String> res = mssqlDao.getPersonDeppartments(code);
+//		res.forEach(System.out::println);
+//	}
 }
