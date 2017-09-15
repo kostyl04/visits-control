@@ -203,6 +203,18 @@
 			personSelect.select2({
 				placeholder: 'Все'
 			});
+			personSelect.change(function(){
+				let count = $('#person option:selected').length;
+				count=count==0?$('#person option').length:count;
+				console.log(count);
+				let time=count*168;
+				timePredict.html("Ожидаемое время выполнения "+parseTime(time));
+			});
+			function parseTime(time){
+				var minutes = Math.floor(time / 60000);
+				  var seconds = ((time % 60000) / 1000).toFixed(0);
+				  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+			}
 		}*/
 	</script>
 	  <script th:src="@{js/form.js}"></script>
