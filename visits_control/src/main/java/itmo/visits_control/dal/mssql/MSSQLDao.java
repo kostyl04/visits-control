@@ -27,5 +27,5 @@ public interface MSSQLDao extends CrudDao {
 	List<Escape> getPersonDisabilities(int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth);
 
 	List<Escape> getPersonLeaves(int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth);
-	List<String> getPersonDeppartments(final int personalCode,Date date);
+	List<String> getPersonDeppartments(final int personalCode,Date date,Date nextMonthDate);
 }

@@ -18,28 +18,26 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <style>
-
 .button {
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
+	background-color: Transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
 }
+
 header {
 	
 }
 
 #tabletoolbar {
-	position: fixed;
-	width: 100%;
-	background-color: black;
-	height: 60px;
-	opacity: 0.8;
-	bottom: 0;
+	
 }
-
+table tr td{
+	font-size:12pt!important;
+	padding:0!important;
+}
 #res {
 	margin-bottom: 45px;
 }
@@ -108,12 +106,15 @@ header {
 	bottom: 0;
 }
 
+.content {
+	margin-top: 150px;
+}
 </style>
 </head>
 <body>
 	<header th:fragment="site-header">
 		<!-- Static navbar -->
-		<nav class="navbar navbar-inverse navbar-static-top text-center"
+		<nav class="navbar navbar-inverse navbar-fixed-top text-center"
 			style="height: 120px; color: white">
 			<div class="container">
 				<div class="navbar-header">

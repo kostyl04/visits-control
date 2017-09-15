@@ -113,7 +113,7 @@ public class PersonInfoBuilder {
 		disabilityHours = disabilityDuration.toHours();
 		missionHours = missionDuration.toHours();
 		
-		personInfo.setPersonDeps(mssqlDao.getPersonDeppartments(personInfo.getPersonalCode(),Date.valueOf(this.date)));
+		personInfo.setPersonDeps(mssqlDao.getPersonDeppartments(personInfo.getPersonalCode(),Date.valueOf(this.date),Date.valueOf(this.date.plusMonths(1))));
 		personInfo.setDisabilityHours(disabilityHours);
 		personInfo.setFullReqieredHours(fullReqieredHours);
 		personInfo.setLeaveHours(leaveHours);

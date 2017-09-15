@@ -7,38 +7,96 @@
 </head>
 
 <body>
-	<header th:replace="imports/template :: site-header" />
+	<header>
+		<nav class="navbar navbar-inverse navbar-fixed-top"
+			style="height: 120px">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" th:href="@{/}"><img
+						th:src="@{images/ITMO_LOGO.svg}" width="96" height="96"></a>
+				</div>
+				<div class="text-center"
+					style="color: white; font-size: 18pt; margin-top: 5px;">Учет
+					рабочего времени сотрудников</div>
+				<div class="text-center" style="color: white; font-size: 16pt;">Фильтры</div>
+				<div id="navbar" class="navbar-collapse collapse ">
+					<div class="navbar-form text-center" style="margin-top: 0px;">
+						<div class="input-group">
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-user"></i></span> <input type="text"
+								class="form-control fio-input" id="fio-input"
+								placeholder="Поиск по ФИО" title="Поиск по ФИО">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-signal"></i></span> <input type="number"
+								class="form-control rate-input" id="rate-input" step="0.25"
+								min="0" max="1.75" placeholder="Ставка"
+								title="Выберите ставку">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-warning-sign"></i></span> <input
+								type="number" class="form-control percent-input"
+								id="percent-input" step="5" min="0" max="100"
+								placeholder="% Пропуска"
+								title="Показать тех, кто пропустил больше %">
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i
+								class="glyphicon glyphicon-home"></i></span> <input type="text"
+								class="form-control fio-input" id="dep-input"
+								placeholder="Поиск по подразделениям"
+								title="Поиск по подразделениям" list="departments_names">
+
+						</div>
+
+						<button class='button btn-clear-deps-input'>
+							<span title='Очистить' style='color: red; font-size: 24px';>
+								&times</span>
+						</button>
+						<button type="button" class='button btn-success' value="2" id="print-button">Экспорт в PDF</button>
+					</div>
+				</div>
+				<!--/.navbar-collapse -->
+			</div>
+		</nav>
+	</header>
 
 
 	<div class="container text-center content" id="res">
-		<h2 th:text="${titleString}"></h2>
+		<h2 th:text="${titleString}" id="table-title"></h2>
 		<table
-			class="table   table-striped  table-bordered scrollable table-container"
-			style="font-size: 10pt; padding: 0px; margin:0px;" id="table-results">
-			<thead class="header">
+			class="table   table-striped  table-bordered scrollable table-container text-left"
+			style="padding: 0px;" id="table-results">
+			<thead class="header" id="table-head">
 				<tr>
-					<th rowspan="3" style="vertical-align: middle">#</th>
-					<th rowspan="3" class="col-md-6" style="vertical-align: middle">ФИО</th>
-					<th rowspan="3" style="vertical-align: middle">Ставка</th>
-					<th rowspan="3" style="vertical-align: middle">Подразделения</th>
-					<th rowspan="3" style="vertical-align: middle">Рабочий план,
-						часов</th>
+					<th class="col-md-1" rowspan="3" style="vertical-align: middle">#</th>
+					<th class="col-md-3" rowspan="3" style="vertical-align: middle">ФИО</th>
+					<th class="col-md-1" rowspan="3" style="vertical-align: middle">Ставка</th>
+					<th class="col-md-1" rowspan="3" style="vertical-align: middle">Подразделения</th>
+					<th class="col-md-1" rowspan="3" style="vertical-align: middle">Рабочий
+						план, часов</th>
+					
 					<th colspan="2" rowspan="2" style="vertical-align: middle">Отработано</th>
 					<th colspan="5">Неявки на работу</th>
 				</tr>
 				<tr>
 
-					<th colspan="1" rowspan="2" style="vertical-align: middle">Отпуск</th>
-					<th colspan="1" rowspan="2" style="vertical-align: middle">Больничный</th>
-					<th colspan="1" rowspan="2" style="vertical-align: middle">Командировка</th>
+					<th class="col-md-1" colspan="1" rowspan="2"
+						style="vertical-align: middle">Отпуск</th>
+					<th class="col-md-1" colspan="1" rowspan="2"
+						style="vertical-align: middle">Больничный</th>
+					<th class="col-md-1" colspan="1" rowspan="2"
+						style="vertical-align: middle">Командировка</th>
 					<th colspan="2">Без причины</th>
 				</tr>
 				<tr>
-					<th>Часы</th>
-					<th>%</th>
+					<th class="col-md-1">Часы</th>
+					<th class="col-md-1">%</th>
 
-					<th>Часы</th>
-					<th>%</th>
+					<th class="col-md-1">Часы</th>
+					<th class="col-md-1">%</th>
 
 				</tr>
 			</thead>
@@ -61,7 +119,7 @@
 							<td th:text="${person.missionHours}"></td>
 
 							<td th:text="${person.getNotWorkedHours()}"></td>
-							<td th:class="${person.isLeaver()?'danger':''+' percentcol'}"
+							<td th:style="${person.isLeaver()?'background-color:#f2dede':''}" th:class="${person.isLeaver()?'danger':''+' percentcol'}"
 								id="percentcol"
 								th:text="${person.getNotWorkedHoursPercent()+'%'}"></td>
 						</tr>
@@ -84,66 +142,9 @@
 			</div>
 		</table>
 	</div>
-	<div class="text-center" style="opacity: 1.0;" id="trigger">
 
-
-		<div class="tabletoolbar text-center" id="tabletoolbar">
-			<h2 class="toolbar-title">Указать фильтры для отображения
-				результатов</h2>
-			<div class="container text-center">
-				<div class="form-inline">
-					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-						<div class="input-group-addon">
-							<span class="glyphicon glyphicon-user"></span>
-						</div>
-						<input type="text" class="form-control fio-input" id="fio-input"
-							placeholder="Поиск по ФИО" title="Поиск по ФИО">
-					</div>
-					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-						<div class="input-group-addon">
-							<span class="glyphicon glyphicon-signal "></span>
-						</div>
-						<input type="number" class="form-control rate-input"
-							id="rate-input" step="0.25" min="0" max="1.75"
-							placeholder="Ставка больше"
-							title="Показать тех у кого ставка больше">
-					</div>
-					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-						<div class="input-group-addon">
-							<span class="glyphicon glyphicon-warning-sign "></span>
-						</div>
-						<input type="number" class="form-control percent-input"
-							id="percent-input" step="5" min="0" max="100"
-							placeholder="Пропустил больше %"
-							title="Показать тех кто пропустил больше %">
-					</div>
-					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-						<div class="input-group-addon">
-							<span class="glyphicon glyphicon-home"></span>
-						</div>
-						<span><input type="text" class="form-control fio-input" id="dep-input"
-							placeholder="Поиск по подразделениям" title="Поиск по ФИО" list="departments_names">
-							<button class='button btn-clear-deps-input'><span title='Очистить' 
-							style='color:red; font-size:24px';>
-							&times</span></button>
-							</span>
-							<datalist id="departments_names" >
-							</datalist>
-					</div>
-					
-					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-					<button class='button' id='print-button'>
-						<span style='color:white;'>
-							Печать
-						</span>
-					</button>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
 	<script th:src="@{js/filter.js}"></script>
+	<script th:src="@{js/pdf_creator.js}"></script>
 	<script>
 		
 	</script>

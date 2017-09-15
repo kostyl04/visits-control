@@ -78,7 +78,7 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Department> getNotHiddenDepartments() {
-		String queryString = "select d from Department d where d.hidden=false";
+		String queryString = "select d from Department d where d.hidden=false order by(departmentName)";
 		Query query = currentSession().createQuery(queryString);
 		return query.getResultList();
 	}
@@ -90,7 +90,7 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 		String queryString = "select dismiss,name,patronymic,personalCode,surname,personDepartmentName=("
 				+ "select top 1 departmentName from Departments d,Contracts c WHERE "
 				+ "c.personalCode=p.personalCode and d.DepartmentCode=c.DepartmentCode "
-				+ "and c.istate=0 and d.hidden='false' order by(c.contractStart) "
+				+ "and c.istate=0 and d.hidden='false' order by(c.contractStart) DESC "
 				+ "),DismissDate as disDate  from personal p " + " " + "order by (surname);";
 		Query query = currentSession().createNativeQuery(queryString, "PersonWithDepResult");
 		return query.getResultList();
@@ -173,17 +173,19 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 		return query.getResultList();
 	}
 	
-	public List<String> getPersonDeppartments(final int personalCode,Date firstDayOfMonth){
+	public List<String> getPersonDeppartments(final int personalCode,Date firstDayOfMonth,Date firstDayOfNextMonth){
 		String queryString = 
 				 "select  distinct departmentName from Departments d,Contracts c WHERE "
 				+ " c.personalCode=:personalCode"
 				+ " and d.DepartmentCode=c.DepartmentCode "
 				+" and c.contractEnd>=:firstDayOfMonth "
-				+ " and d.hidden='false' ";
+				+ " and d.hidden='false' "
+				+"and c.contractStart<:firstDayOfNextMonth "
+				+"and c.prolongDate<:firstDayOfNextMonth ";
 		Query query = currentSession().createNativeQuery(queryString);
 		query.setParameter("personalCode", personalCode);
 		query.setParameter("firstDayOfMonth", firstDayOfMonth);
-		
+		query.setParameter("firstDayOfNextMonth", firstDayOfNextMonth);
 		return query.getResultList();
 	}
 

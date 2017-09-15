@@ -29,22 +29,23 @@
 
 
 				</div>
-				
-					<div class="form-group">
-						<label for="rate">Показывать результат на:</label> <select
-							class="form-control" id="rate" name="rate" th:field="*{rate}">
-							<option value="0">Действующую ставку</option>
-							<option value="1">1 ставку</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="rate">Способ представления результатов:</label> <select
-							class="form-control" id="resFormat" name="resFormat" th:field="*{resultFormat}">
-							<option value="0">По подразделениям</option>
-							<option value="1">По сотрудникам</option>
-						</select>
-					</div>
-				
+
+				<div class="form-group">
+					<label for="rate">Показывать результат на:</label> <select
+						class="form-control" id="rate" name="rate" th:field="*{rate}">
+						<option value="0">Действующую ставку</option>
+						<option value="1">1 ставку</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="rate">Способ представления результатов:</label> <select
+						class="form-control" id="resFormat" name="resFormat"
+						th:field="*{resultFormat}">
+						<option value="0">По подразделениям</option>
+						<option value="1">По сотрудникам</option>
+					</select>
+				</div>
+
 				<div class="form-group">
 					<label for="dep">Выберите подразделения</label> <select size="7"
 						multiple class="form-control" id="dep">
@@ -61,14 +62,17 @@
 				<input type="button" id="clear" class="btn btn-primary"
 					value="Очистить">
 				<button type="submit" id="submit" class="btn btn-success">Показать</button>
-
+				<div class="form-group ">
+					<h1 id="time"></h1>
+				</div>
 			</form>
+
 		</div>
 	</div>
 	<footer th:replace="imports/template :: site-footer" />
 	<script th:inline="javascript">
 		var path = /*[[@{/}]]*/'test';
-		let monthsParseArray=["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+		/*let monthsParseArray=["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
 		let formmodel;
 		let monthSelect=$("#month");
 		let yearSelect=$("#year");
@@ -199,9 +203,9 @@
 			personSelect.select2({
 				placeholder: 'Все'
 			});
-		}
+		}*/
 	</script>
-	<!--  <script th:src="@{js/form.js}"></script>-->
+	  <script th:src="@{js/form.js}"></script>
 </body>
 </html>
 
