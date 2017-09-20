@@ -50,10 +50,12 @@ public class PersonInfoBuilder {
 		long leaveHours;
 		long disabilityHours;
 		long missionHours;
+		long educationHours;
 		Duration duration = Duration.ofHours(0);
 		Duration leaveDuration = Duration.ofHours(0);
 		Duration disabilityDuration = Duration.ofHours(0);
 		Duration missionDuration = Duration.ofHours(0);
+		Duration educationDuration = Duration.ofHours(0);
 
 		List<Duration> days = parseWorkRegime();
 		for (Duration d : days) {
@@ -66,7 +68,7 @@ public class PersonInfoBuilder {
 		for (Order o : orders) {
 			fullMonthRate += o.getRateSize().doubleValue();
 		}
-		fullReqieredHours *= fullMonthRate>rateProperty?rateProperty:fullMonthRate;
+		fullReqieredHours *= fullMonthRate > rateProperty ? rateProperty : fullMonthRate;
 		for (int i = 0; i < days.size(); i++) {
 			LocalDate tempDate = date.plusDays(i);
 			Double rate = 0d;
@@ -98,6 +100,12 @@ public class PersonInfoBuilder {
 						missionDuration = missionDuration.plus(Duration.ofMillis(l));
 						break;
 					}
+				} else if (e.getType().equals(EscapeType.Education)) {
+					if (e.checkEscapeDate(tempDate)) {
+						educationDuration = educationDuration.plus(Duration.ofMillis(l));
+						break;
+					}
+
 				}
 			}
 		}
@@ -108,16 +116,19 @@ public class PersonInfoBuilder {
 		} else {
 			personInfo.setStatus(PersonInfoStatus.NotFoundInVisits);
 		}
-		List<String> personDeps=new ArrayList();
+		List<String> personDeps = new ArrayList();
 		leaveHours = leaveDuration.toHours();
 		disabilityHours = disabilityDuration.toHours();
 		missionHours = missionDuration.toHours();
-		
-		personInfo.setPersonDeps(mssqlDao.getPersonDeppartments(personInfo.getPersonalCode(),Date.valueOf(this.date),Date.valueOf(this.date.plusMonths(1))));
+		educationHours = educationDuration.toHours();
+
+		personInfo.setPersonDeps(mssqlDao.getPersonDeppartments(personInfo.getPersonalCode(), Date.valueOf(this.date),
+				Date.valueOf(this.date.plusMonths(1))));
 		personInfo.setDisabilityHours(disabilityHours);
 		personInfo.setFullReqieredHours(fullReqieredHours);
 		personInfo.setLeaveHours(leaveHours);
 		personInfo.setMissionHours(missionHours);
+		personInfo.setEducationHours(educationHours);
 		personInfo.setRateSize(fullMonthRate);
 		personInfo.setWorkedOutHours(workedOutHours);
 
@@ -140,11 +151,16 @@ public class PersonInfoBuilder {
 
 	}
 
-	private boolean workingRegimeStringIsValid(String regimeString) {
-		Pattern p = Pattern.compile("([0-9][0-9][\\.][0-9][0-9])");
-		boolean validLength = regimeString.trim().length() % 5 == 0 ? true : false;
-		boolean patternMatch = p.matcher(regimeString).lookingAt();
-		return validLength && patternMatch ? true : false;
+	private boolean workingRegimeStringIsValid(List<String> regimes) {
+		if (regimes.isEmpty())
+			return false;
+		else {
+			this.regimeString = regimes.get(0);
+			Pattern p = Pattern.compile("([0-9][0-9][\\.][0-9][0-9])");
+			boolean validLength = regimeString.trim().length() % 5 == 0 ? true : false;
+			boolean patternMatch = p.matcher(regimeString).lookingAt();
+			return validLength && patternMatch ? true : false;
+		}
 
 	}
 
@@ -186,16 +202,19 @@ public class PersonInfoBuilder {
 		escapes.addAll(mssqlDao.getPersonDisabilities(personalCode, firstDayOfMonth, firstDayOfNextMonth));
 		escapes.addAll(mssqlDao.getPersonLeaves(personalCode, firstDayOfMonth, firstDayOfNextMonth));
 		escapes.addAll(mssqlDao.getPersonMissions(personalCode, firstDayOfMonth, firstDayOfNextMonth));
+		escapes.addAll(mssqlDao.getPersonEducations(personalCode, firstDayOfMonth, firstDayOfNextMonth));
 		return escapes;
 	}
 
 	public PersonInfoBuilder buildMonthRegime(int month, int year, double rateProperty) {
-		this.regimeString = mssqlDao.getWorkRegimes(year, month);
-		this.dayWorkingTime = parseWorkRegime();
+		List<String> regimes = mssqlDao.getWorkRegimes(year, month);
+
 		this.date = LocalDate.of(year, month, 1);
-		if (!workingRegimeStringIsValid(this.regimeString)) {
+		if (!workingRegimeStringIsValid(regimes)) {
+
 			throw new DataException("Не удалось получить режим работы за " + month + " месяц, " + year + " год!");
 		}
+		this.dayWorkingTime = parseWorkRegime();
 		this.rateProperty = rateProperty;
 		return this;
 	}

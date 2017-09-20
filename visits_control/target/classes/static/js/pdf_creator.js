@@ -66,10 +66,11 @@ function generateTest(tr){
 		
 		arr.push({
 			"text":text,
-			"fontSize":10,
+			"fontSize":9,
 			"colSpan":colspan,
 			"fillColor":(td.style.backgroundColor)?rgb2hex(td.style.backgroundColor):'',
-			"alignment":getComputedStyle(td).textAlign
+			"alignment":getComputedStyle(td).textAlign,
+			
 		});
 		for(let i=0;i<colspan-1;i++){
 			arr.push({});
@@ -93,31 +94,36 @@ function parseData(){
 	return  trArray;
 }
 function test(e){
-	console.dir(parseData());
-	print_button_onclick(parseData(),e.target.value);
+	waitingDialog.show('Идет формирование pdf файла, пожалуйста подождите');
+	let event = e;
+	setTimeout(function(){
+		console.dir(parseData());
+		print_button_onclick(parseData(),event.target.value);
+	},1000)
+	
 	
 }
 function print_button_onclick(data,type){
 	// var docDefinition = { content: 'русские символы' };
-	
+		
 		let header1=[
            	[{"columns":
         		[{"text":document.getElementById("table-title").innerHTML,"fontSize":10,"margin":[0,0,0,0],"fillColor":"#f2f2f2"}
         				],"colSpan":11,"alignment":"center"},"","","","","","","","","",""],
         					[
-        					{"text":"#","fillColor":"#b4c6e7","bold":true, rowSpan:3,"fontSize":10 },
-        					{"text":"ФИО","fillColor":"#b4c6e7","bold":true, rowSpan:3,"fontSize":10 },
-        					{"text":"Ставка","fillColor":"#b4c6e7","bold":true,  rowSpan:3,"fontSize":10 },
-        					{"text":"План, ч.","fillColor":"#b4c6e7","bold":true, rowSpan:3,"fontSize":10 },
+        					{"text":"№","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        					{"text":"ФИО","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        					{"text":"Ставка","fillColor":"#b4c6e7","bold":true,  rowSpan:2,"fontSize":10 },
+        					{"text":"План, ч.","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
         					
-        					{"text":"Отработано","fillColor":"#b4c6e7","bold":true, colSpan:2,"fontSize":10 },
-        					{},
+        					{"text":"Отр.","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        					{"text":"О","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        					{"text":"Б","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        					{"text":"К","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        					{"text":"КПК","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        					{"text":"Всего","fillColor":"#b4c6e7","bold":true,colSpan:2,"fontSize":10 },
+        					{}
         					
-        					{"text":"Неявки на работу","fillColor":"#b4c6e7","bold":true, colSpan:5,"fontSize":10 },
-        					{},
-        					{},
-        					{},
-        					{},
 
         					],
         					[
@@ -126,83 +132,73 @@ function print_button_onclick(data,type){
         						{},// Ставка
         						{},// Рабочий план,
 									// часов
-        						{"text":"ч.","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-        						{"text":"%","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+        						{},// Отработано,
+        						{},// Отпуск,
+        						{},// Больничный,
+        						{},// Командировка,
+        						{},
+        						{"text":"ч.","fillColor":"#b4c6e7","bold":true, "fontSize":10 },
+        						{"text":"%","fillColor":"#b4c6e7","bold":true, "fontSize":10 },
         						
-        						{"text":"О","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-        						{"text":"Б","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-        						{"text":"К","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-        						
-        						{"text":"ПР","fillColor":"#b4c6e7","bold":true, colSpan:2,"fontSize":10 },{},
-        					],
-        					[
-        						{},{},{},{},{},{},{},{},{},
-        						
-        						{"text":"Ч.","fillColor":"#b4c6e7","bold":true,"fontSize":10 },
-        						{"text":"%","fillColor":"#b4c6e7","bold":true,"fontSize":10 },
-        					],
+        					]
         					// /data
         			
         ];
 		let header2=[
-		            		[{"columns":
-        		[{"text":document.getElementById("table-title").innerHTML,"fontSize":10,"margin":[0,0,0,0],"fillColor":"#f2f2f2"}
-        				],"colSpan":12,"alignment":"center"},"","","","","","","","","","",""],
-		            					[
-		            					{"text":"#","fillColor":"#b4c6e7","bold":true, rowSpan:3,"fontSize":10 },
-		            					{"text":"ФИО","fillColor":"#b4c6e7","bold":true, rowSpan:3,"fontSize":10 },
-		            					{"text":"Ставка","fillColor":"#b4c6e7","bold":true,  rowSpan:3,"fontSize":10 },
-		            					{"text":"Подразделения","fillColor":"#b4c6e7","bold":true,  rowSpan:3,"fontSize":10 },
-		            					{"text":"План, ч.","fillColor":"#b4c6e7","bold":true, rowSpan:3,"fontSize":10 },
-		            					
-		            					{"text":"О","fillColor":"#b4c6e7","bold":true, colSpan:2,"fontSize":10 },
-		            					{},
-		            					
-		            					{"text":"Неявки на работу","fillColor":"#b4c6e7","bold":true, colSpan:5,"fontSize":10 },
-		            					{},
-		            					{},
-		            					{},
-		            					{},
+		            	[{"columns":
+		         		[{"text":document.getElementById("table-title").innerHTML,"fontSize":10,"margin":[0,0,0,0],"fillColor":"#f2f2f2"}
+		         				],"colSpan":12,"alignment":"center"},"","","","","","","","","","",""],
+		         					[
+		         					{"text":"№","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"ФИО","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"Ставка","fillColor":"#b4c6e7","bold":true,  rowSpan:2,"fontSize":10 },
+		         					{"text":"Подразделение","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"План, ч.","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					
+		         					{"text":"Отр.","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"О","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"Б","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"К","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"КПК","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
+		         					{"text":"Всего","fillColor":"#b4c6e7","bold":true,colSpan:2,"fontSize":10 },
+		         					{}
+		         					
 
-		            					],
-		            					[
-		            						{},// "#"
-		            						{},// "ФИО"
-		            						{},// Ставка
-		            						{},
-		            						{},// Рабочий план,
-		    									// часов
-		            						{"text":"ч.","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-		            						{"text":"%","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-		            						
-		            						{"text":"О","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-		            						{"text":"Б","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-		            						{"text":"К","fillColor":"#b4c6e7","bold":true, rowSpan:2,"fontSize":10 },
-		            						
-		            						{"text":"Б/П","fillColor":"#b4c6e7","bold":true, colSpan:2,"fontSize":10 },{},
-		            					],
-		            					[
-		            						{},{},{},{},{},{},{},{},{},{},
-		            						
-		            						{"text":"ч.","fillColor":"#b4c6e7","bold":true,"fontSize":10 },
-		            						{"text":"%","fillColor":"#b4c6e7","bold":true,"fontSize":10 },
-		            					],
-		            					// /data
-		            			
-		            ];
+		         					],
+		         					[
+		         						{},// "#"
+		         						{},// "ФИО"
+		         						{},// Ставка
+		         						{},
+		         						{},// Рабочий план,
+		 									// часов
+		         						{},// Отработано,
+		         						{},// Отпуск,
+		         						{},// Больничный,
+		         						{},// Командировка,
+		         						{},
+		         						{"text":"ч.","fillColor":"#b4c6e7","bold":true, "fontSize":10 },
+		         						{"text":"%","fillColor":"#b4c6e7","bold":true, "fontSize":10 },
+		         						
+		         					]
+		         					// /data
+		         			
+		         ];
 		let header= type==1?header1:header2;
 	var dd = {
 			 header: function(currentPage, pageCount) {
 				 return { text: currentPage.toString() + ' из ' + pageCount, alignment:'right' }; },
 			content: [
-				{
+				{	marginLeft:30,
+					width:900,
+				
 		            columns: [
 		                {
 		                    width: '90%',
-		                    alignment: 'left',
+		                    alignment: 'right',
 		                    style: 't1',
 		                    table: {
-		                        headerRows: 4,
+		                        headerRows: 3,
 		                        dontBreakRows: true,
 		                        body:header,
 		                        width:"auto",
@@ -210,7 +206,7 @@ function print_button_onclick(data,type){
 		                    },
 		                    
 		                },
-		                {text: '', width: '*'},
+		                {text: '', width: '900'},
 		               
 		            ]
 		        }
@@ -224,7 +220,9 @@ function print_button_onclick(data,type){
 	let body=dd.content[0].columns[0].table.body;
 	for(let o of data)
 		body.push(o);
-	pdfMake.createPdf(dd).open();
+	pdfMake.createPdf(dd).download();
+	waitingDialog.hide();
+	
 
 	
 }

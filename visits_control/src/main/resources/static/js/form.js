@@ -1,13 +1,18 @@
 let monthsParseArray=["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
 		let formmodel;
-		let monthSelect=$("#month");
-		let yearSelect=$("#year");
+//		let monthSelect=$("#month");
+//		let yearSelect=$("#year");
 		let departmentSelect=$("#dep");
 		let personSelect=$("#person");
+		let  calendar = null;
+		
 let timePredict=$("#time");
 		window.onload = function() {
-			console.log(yearSelect.value);
-			getformmodel();
+			waitingDialog.show('Идет загрузка формы, пожалуйста подождите');
+			setTimeout(function(){
+				getformmodel();
+			},1000)
+			
 			$("#form").submit(function(){
 				if(personSelect.val().length==0){
 					$("#person option").prop("selected", "selected");}
@@ -38,13 +43,22 @@ let timePredict=$("#time");
 				dataType : 'json',
 				timeout : 100000,
 				success : function(data) {
-					
+					console.dir(data.map);
+					calendar = new Calendar(data.map);
+					$(".arrow-left").click(function(){
+						calendar.leftArrowOnClick();
+					});
+					$(".arrow-right").click(function(){
+						calendar.rightArrowOnClick();
+					});
 					formmodel=data;
 					fillForm();
+					waitingDialog.hide();
 
 				},
 				error : function(e) {
 					console.log("ERROR: ", e);
+					
 					fillForm(e);
 				},
 				done : function(e) {
@@ -67,11 +81,12 @@ let timePredict=$("#time");
 		function fillForm(){
 			console.dir(formmodel);
 			let changeMonths=function(){
-				monthSelect.empty();
-				for (let month of formmodel.map[yearSelect.val()]) {
-					console.log(month)
-					monthSelect.append(new Option(monthsParseArray[month-1], month));
-				}
+			//	monthSelect.empty();
+				console.dir(formmodel.map);
+//				for (let month of formmodel.map[calendar.getSelectedYear()]) {
+//					console.log(month)
+//				//	monthSelect.append(new Option(monthsParseArray[month-1], month));
+//				}
 			}
 			let changePersons=function(){
 				let persons=[];
@@ -82,8 +97,12 @@ let timePredict=$("#time");
 				
 				for (let dep of departmentSelect.val()) {
 					for(let person of formmodel.selectPersonsList){
-						let year=yearSelect.val();
-						let month=monthSelect.val();
+//						let year=yearSelect.val();
+//						let month=monthSelect.val();
+						
+						let year = 	calendar.getSelectedYear();
+						let month = calendar.getSelectedMonthNumber();
+						
 						let isNotDismiss=false;
 						if(person.dismissDate==null||person.dismissDate[0]>year)
 							isNotDismiss=true;
@@ -98,8 +117,11 @@ let timePredict=$("#time");
 					personSelect.append(new Option(person.fullName,JSON.stringify(person)));
 				}}else{
 					for(let person of formmodel.selectPersonsList){
-						let year=yearSelect.val();
-						let month=monthSelect.val();
+//						let year=yearSelect.val();
+//						let month=monthSelect.val();
+						let year = calendar.getSelectedYear();
+						let month = calendar.getSelectedMonthNumber();
+						
 						let isNotDismiss=false;
 						if(person.dismissDate==null||person.dismissDate[0]>year)
 							isNotDismiss=true;
@@ -112,11 +134,11 @@ let timePredict=$("#time");
 						personSelect.append(new Option(person.fullName,JSON.stringify(person)));
 					}
 				}
-				console.dir(personSelect);
+			//	console.dir(personSelect);
 			}
-			for (let year in formmodel.map) {
-				yearSelect.append(new Option(year, year));
-			}
+//			for (let year in formmodel.map) {
+//				yearSelect.append(new Option(year, year));
+//			}
 			for(let person of formmodel.selectPersonsList){
 				 personSelect.append(new Option(person.fullName,JSON.stringify(person)));
 			}
@@ -125,13 +147,18 @@ let timePredict=$("#time");
 			}
 			
 			changeMonths();
-			yearSelect.change(function(){
+			calendar.setOnchangeCallback(function(){
 				changeMonths();
 				changePersons();
 			});
-			monthSelect.change(function(){
-				changePersons();
-			});
+			
+//			yearSelect.change(function(){
+//				changeMonths();
+//				changePersons();
+//			});
+//			monthSelect.change(function(){
+//				changePersons();
+//			});
 			departmentSelect.change(function(){
 				changePersons();
 			});
@@ -144,3 +171,95 @@ let timePredict=$("#time");
 			});
 			
 		}
+		function Calendar(datesMap){
+			this.datesMap=datesMap;
+			this.yearIndex=0;
+			this.monthIndex=0;
+			// this.monthShortNames=['Янв','Фев','Мрт','Апр','Май','Июн','Июл','Авг','Сен','Окт','Нбр','Дек'];
+			this.monthLabels=$(".month-label");
+			this.yearLabel=$(".year-label");
+			
+			var selfc = this;
+			this.getSelectedYear = function(){
+				let year=Object.keys(this.datesMap)[selfc.yearIndex];
+				return year;
+			}
+			this.getSelectedYearNumber = function(){
+				return selfc.yearIndex;
+			}
+			this.getSelectedMonthNumber = function(){
+				let year=Object.keys(selfc.datesMap)[selfc.yearIndex];
+				return selfc.monthIndex;//year[selfc.monthIndex];
+			}			
+			this.setOnchangeCallback = function( arg ){
+				selfc._onChangeCallback = arg;
+			}
+			
+			this.parseDatesInCalendar=function(){
+				let year=Object.keys(this.datesMap)[this.yearIndex];
+				this.yearLabel.html(year);
+				for(let mIndex in this.datesMap[year]){
+					this.monthLabels[mIndex].style.display="inline-block";
+					this.monthLabels[mIndex].className=this.monthLabels[mIndex].className.replace("active-label","");
+				}
+				this.monthLabels[this.monthIndex].className+=' active-label';
+				
+				this.onChange();
+			}
+			this.rightArrowOnClick=function(){
+				
+				let inRange=this.yearIndex<Object.keys(this.datesMap).length-1;
+				if(inRange){
+					this.yearIndex++;
+					this.monthIndex=0;
+					this.parseDatesInCalendar();
+				}
+				//onChange();
+				
+			}
+			this.leftArrowOnClick=function(){
+				let inRange=this.yearIndex>0;
+				if(inRange){
+					this.yearIndex--;
+					this.monthIndex=0;
+					this.parseDatesInCalendar();
+				}
+				//onChange();
+			}
+			this.onChange = function(){
+				var input_year = $('#year');
+				var input_month = $('#month');
+				
+				input_year.val(this.getSelectedYear());
+				input_month.val(this.getSelectedMonthNumber());
+				
+				input_year.text = 	this.getSelectedYear();
+				input_month.text = this.getSelectedMonthNumber();
+				
+				
+				console.log("Selected: " + input_year.value  +" " + input_month.value );
+				
+				if(selfc._onChangeCallback){
+					selfc._onChangeCallback();
+				}
+			}
+			let self = this;
+			this.monthLabels.click(function(e){
+				// this.monthLabels[mIndex].className
+				let index=jQuery.inArray( e.target, self.monthLabels );
+				// self.monthLabels[index].className+="active-label";
+				self.monthIndex=index;
+				self.parseDatesInCalendar();
+				//onChange();
+				
+				
+			});
+			this.parseDatesInCalendar();
+		}
+		
+		
+		
+		
+		
+		
+		

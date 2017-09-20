@@ -2,10 +2,16 @@ package itmo.visits_control.dal.mssql;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,6 +20,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.type.DateType;
+import org.hibernate.type.IntegerType;
 import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import itmo.visits_control.entities.mssql.Department;
 import itmo.visits_control.entities.mssql.Order;
 import itmo.visits_control.entities.mssql.Person;
+import itmo.visits_control.entities.mssql.ProfEducation;
 import itmo.visits_control.models.Escape;
 
 @Repository(value = "MSSQLDao")
@@ -133,13 +142,11 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 	 * )
 	 */
 	@Override
-	public String getWorkRegimes(int yearNumber, int month) {
+	public List<String> getWorkRegimes(int yearNumber, int month) {
 		String queryString = "select r.month" + month + "StringRegime FROM Regimes r WHERE r.yearNumber=:year";
 		Query query = currentSession().createQuery(queryString);
 		query.setParameter("year", yearNumber);
-
-		String regimeString = (String) query.getResultList().get(0);
-		return regimeString;
+		return query.getResultList();
 	}
 
 	@Override
@@ -172,21 +179,51 @@ public class MSSQLCrudDaoBean implements MSSQLDao {
 
 		return query.getResultList();
 	}
-	
-	public List<String> getPersonDeppartments(final int personalCode,Date firstDayOfMonth,Date firstDayOfNextMonth){
-		String queryString = 
-				 "select  distinct departmentName from Departments d,Contracts c WHERE "
-				+ " c.personalCode=:personalCode"
-				+ " and d.DepartmentCode=c.DepartmentCode "
-				+" and c.contractEnd>=:firstDayOfMonth "
-				+ " and d.hidden='false' "
-				+"and c.contractStart<:firstDayOfNextMonth "
-				+"and c.prolongDate<:firstDayOfNextMonth ";
+
+	@Override
+	public List<Escape> getPersonEducations(int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth) {
+		Query query = currentSession().createNativeQuery(
+				"select PersonalCode,(CONVERT(Datetime,EducationStart , 105)) as edStart,(CONVERT(Datetime,EducationEnd , 105)) as edEnd from dbo.ProfEducation  where PersonalCode = :personalCode"
+						+ " and CONVERT(Datetime,EducationStart , 105) < :firstDayOfNextMonth"
+						+ " and CONVERT(Datetime,EducationEnd , 105) >= :firstDayOfMonth",
+				"Educations");
+		query.setParameter("personalCode", personalCode);
+		query.setParameter("firstDayOfMonth", firstDayOfMonth);
+		query.setParameter("firstDayOfNextMonth", firstDayOfNextMonth);
+
+		return query.getResultList();
+	}
+
+	public List<String> getPersonDeppartments(final int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth) {
+		String queryString = "select  distinct departmentName from Departments d,Contracts c WHERE "
+				+ " c.personalCode=:personalCode" + " and d.DepartmentCode=c.DepartmentCode "
+				+ " and c.contractEnd>=:firstDayOfMonth " + " and d.hidden='false' "
+				+ "and c.contractStart<:firstDayOfNextMonth " + "and c.prolongDate<:firstDayOfNextMonth ";
 		Query query = currentSession().createNativeQuery(queryString);
 		query.setParameter("personalCode", personalCode);
 		query.setParameter("firstDayOfMonth", firstDayOfMonth);
 		query.setParameter("firstDayOfNextMonth", firstDayOfNextMonth);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<ProfEducation> testDateExstract() throws Exception {
+		/*
+		 * Connection conn = null;
+		 * Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); conn =
+		 * DriverManager.getConnection(
+		 * "jdbc:sqlserver://lis31:1433;databaseName=itmo_delta", "sa",
+		 * "V19Gal56"); conn.createStatement();
+		 * //"SELECT CONVERT(Datetime,EducationStart , 105) from ProfEducation"
+		 * ResultSet rs = conn.createStatement()
+		 * .executeQuery("SELECT CONVERT(Datetime,EducationStart , 105) from ProfEducation"
+		 * ); while(rs.next()){ System.out.println(rs.getObject(1)); }
+		 * conn.close();
+		 */
+		return currentSession().createNativeQuery(
+				"SELECT PersonalCode,(CONVERT(Datetime,EducationStart , 105)) as edEnd  from dbo.ProfEducation", "Educ")
+				.getResultList();
+
 	}
 
 }

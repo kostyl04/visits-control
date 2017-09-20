@@ -56,9 +56,13 @@
 	  });
 	  document.getElementsByClassName("btn-clear-deps-input")[0].onclick=function(){
 		  depinput.value='';
+		 fioinput.value =''; 
+		 rateinput.value=0;
+		  percentinput.value=0;
+		
 		  filterChain.doChain();
 	  }
-//	  var saved_onload = window.onload;
+// var saved_onload = window.onload;
 	  window.onload = function(){
 		  pdf_creator_init();
 		  dep_names_list.innerHTML = '';
@@ -158,7 +162,8 @@
 		  this.nextFilter = new depFilter();
 	      this.filter = function(td) {
 	          var filter = Number(percentinput.value);
-	          if (td.id == "percentcol" && Number(td.innerHTML.split("%")[0]) < filter) {
+	          let value=Number(td.innerHTML.split("%")[0]);
+	          if (td.id == "percentcol" && value > filter&&filter) {
 	              td.parentNode.style.display = "none";
 
 	          } else if (this.nextFilter) this.nextFilter.filter(td);
@@ -182,15 +187,15 @@
 	   
 
 	    
-//	    var set = new DepSet();  
-//	    set.add('отдел');
-//	    set.add('отдел гидро');
-//	    set.add('отдел гидродина');
-//	    set.clear();
-//	    set.add('3');
-//	    for(var val of set.values()){
-//	    	console.log(val);
-//	    }
+// var set = new DepSet();
+// set.add('отдел');
+// set.add('отдел гидро');
+// set.add('отдел гидродина');
+// set.clear();
+// set.add('3');
+// for(var val of set.values()){
+// console.log(val);
+// }
 //	      
 	      
 	      

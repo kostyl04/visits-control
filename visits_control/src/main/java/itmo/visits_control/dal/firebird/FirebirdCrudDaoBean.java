@@ -97,7 +97,7 @@ public class FirebirdCrudDaoBean implements FireBirdDao {
 		// upper(:firstName)"
 		Query query = currentSession()
 				.createQuery(
-						"select  s from Staff s where upper(s.lastName) = upper(:lastName) AND upper(s.middleName) = upper(:middleName) AND upper(s.firstName) = upper(:firstName)")
+						"select  s from Staff s where upper(s.lastName) = upper(:lastName) AND upper(s.middleName) = upper(:middleName) AND upper(s.firstName) = upper(:firstName) and s.dateDismiss=null")
 				.setParameter("firstName", firstName).setParameter("middleName", middleName)
 				.setParameter("lastName", lastName);
 		return query.getResultList();

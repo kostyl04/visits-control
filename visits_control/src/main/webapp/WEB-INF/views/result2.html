@@ -11,10 +11,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top"
 			style="height: 120px">
 			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" th:href="@{/}"><img
-						th:src="@{images/ITMO_LOGO.svg}" width="96" height="96"></a>
-				</div>
+				
 				<div class="text-center"
 					style="color: white; font-size: 18pt; margin-top: 5px;">Учет
 					рабочего времени сотрудников</div>
@@ -31,8 +28,7 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-signal"></i></span> <input type="number"
 								class="form-control rate-input" id="rate-input" step="0.25"
-								min="0" max="1.75" placeholder="Ставка"
-								title="Выберите ставку">
+								min="0" max="1.75" placeholder="Ставка" title="Выберите ставку">
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon"><i
@@ -40,7 +36,7 @@
 								type="number" class="form-control percent-input"
 								id="percent-input" step="5" min="0" max="100"
 								placeholder="% Пропуска"
-								title="Показать тех, кто пропустил больше %">
+								title="Показать тех, кто отработал меньше %">
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon"><i
@@ -55,91 +51,89 @@
 							<span title='Очистить' style='color: red; font-size: 24px';>
 								&times</span>
 						</button>
-						<button type="button" class='button btn-success' value="2" id="print-button">Экспорт в PDF</button>
+						<button type="button" class='button btn-success' value="2"
+							id="print-button">Экспорт в PDF</button>
 					</div>
 				</div>
 				<!--/.navbar-collapse -->
 			</div>
 		</nav>
 	</header>
+	<datalist id="departments_names"
+		style="overflow-y: auto !important; height: 300px;">
+	</datalist>
 
 
 	<div class="container text-center content" id="res">
 		<h2 th:text="${titleString}" id="table-title"></h2>
-		<table
-			class="table   table-striped  table-bordered scrollable table-container text-left"
-			style="padding: 0px;" id="table-results">
-			<thead class="header" id="table-head">
+		<table class="table-striped" style="padding: 0px; margin: auto;"
+			id="table-results">
+			<thead class="header " id="table-head">
 				<tr>
-					<th class="col-md-1" rowspan="3" style="vertical-align: middle">#</th>
-					<th class="col-md-3" rowspan="3" style="vertical-align: middle">ФИО</th>
-					<th class="col-md-1" rowspan="3" style="vertical-align: middle">Ставка</th>
-					<th class="col-md-1" rowspan="3" style="vertical-align: middle">Подразделения</th>
-					<th class="col-md-1" rowspan="3" style="vertical-align: middle">Рабочий
-						план, часов</th>
-					
-					<th colspan="2" rowspan="2" style="vertical-align: middle">Отработано</th>
-					<th colspan="5">Неявки на работу</th>
+					<th id="numTH" class="" rowspan="2">№</th>
+					<th id="fioTH" class="" rowspan="2">ФИО</th>
+					<th id="rateTH" rowspan="2" class="vertical" ><span
+						class="vertical-span">Ставка</span></th>
+						<th id="depTH" class="" rowspan="2">Подр.</th>
+					<th id="planTH" rowspan="2">План,<br>
+						ч.
+					</th>
+					<th id="reqTH" rowspan="2">Отр</th>
+					<th id="leaveTH" class="vertical" rowspan="2" colspan="1"><span
+						class="vertical-span">Отпуск </span></th>
+					<th id="disTH" class="vertical" rowspan="2" colspan="1"><span
+						class="vertical-span">Больничный</span></th>
+					<th id="misTH" class="vertical" rowspan="2" colspan="1"><span
+						class="vertical-span">Командировка</span></th>
+					<th id="courseTH" class="vertical" rowspan="2" colspan="1"><span
+						class="vertical-span">Курсы ПК</span></th>
+					<th id="allTH" colspan="2" rowspan="1">Всего</th>
 				</tr>
 				<tr>
-
-					<th class="col-md-1" colspan="1" rowspan="2"
-						style="vertical-align: middle">Отпуск</th>
-					<th class="col-md-1" colspan="1" rowspan="2"
-						style="vertical-align: middle">Больничный</th>
-					<th class="col-md-1" colspan="1" rowspan="2"
-						style="vertical-align: middle">Командировка</th>
-					<th colspan="2">Без причины</th>
-				</tr>
-				<tr>
-					<th class="col-md-1">Часы</th>
-					<th class="col-md-1">%</th>
-
-					<th class="col-md-1">Часы</th>
-					<th class="col-md-1">%</th>
+					<th id="allHTH">ч.</th>
+					<th id="allPTH">%</th>
 
 				</tr>
 			</thead>
 			<tbody id="table-results-body">
-				<div th:each="person, it:${results}">
+				<div th:each="person,iter :${results}">
 					<div th:if="${person.status.isOk()}">
 						<tr>
-							<td th:text="${it.count}"></td>
+							<td th:text="${iter.count}"></td>
 							<td style="width: 5px;" class="fiocol text-left" id="fiocol"
 								th:text="${person.getFullName()}"></td>
 							<td class="ratecol" id="ratecol" th:text="${person.rateSize}"
 								th:title="${person.getDepsTitle()}"></td>
-							<td th:text="${person.getDepsTitle()}"></td>
+							<td id="depTD" th:text="${person.getDepsTitle()}"></td>
 							<td th:text="${person.fullReqieredHours}"></td>
 							<td th:text="${person.workedOutHours}"></td>
-							<td th:text="${person.getWorkedOutPercent()}"></td>
-
 							<td th:text="${person.leaveHours}"></td>
 							<td th:text="${person.disabilityHours}"></td>
 							<td th:text="${person.missionHours}"></td>
+							<td th:text="${person.educationHours}"></td>
 
-							<td th:text="${person.getNotWorkedHours()}"></td>
-							<td th:style="${person.isLeaver()?'background-color:#f2dede':''}" th:class="${person.isLeaver()?'danger':''+' percentcol'}"
-								id="percentcol"
-								th:text="${person.getNotWorkedHoursPercent()+'%'}"></td>
+							<td th:text="${person.getAllClosedHours()}"></td>
+							<td th:style="${person.isLeaver()?'background-color:#f2dede':''}"
+								th:class="${person.isLeaver()?'danger':''+' percentcol'}"
+								id="percentcol" th:text="${person.getWorkedOutPercent()+'%'}"></td>
 						</tr>
 					</div>
 					<div th:if="${!person.status.isOk()}">
-						<tr>
-							<td th:text="${it.count}"></td>
+						<tr id="bad-status">
+							<td th:text="${iter.count}"></td>
 							<td class="fiocol text-left" id="fiocol" style="width: 10%"
 								colspan="1" th:text="${person.fullName}"></td>
-							<td class="ratecol" id="ratecol" colspan="5"
+							<td  th:title="${person.getDepsTitle()}" class="ratecol" id="ratecol" colspan="1"
 								th:text="${person.rateSize}"></td>
-							<td colspan="5" th:text="${person.status.message}"></td>
+							<td colspan="9" th:text="${person.status.message}"></td>
 						</tr>
 					</div>
-
-
-
 				</div>
+
+
+
 			</tbody>
-			</div>
+
 		</table>
 	</div>
 

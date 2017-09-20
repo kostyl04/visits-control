@@ -1,0 +1,47 @@
+var gulp =        require('gulp');
+var sass =        require('gulp-sass');
+var browserSync = require('browser-sync');
+var useref =      require('gulp-useref');
+var uglify =      require('gulp-uglify');
+var gutil =       require('gulp-util');
+var concat =      require('gulp-concat');
+var gulpIf =      require('gulp-if');
+var minifyCSS =   require('gulp-minify-css');
+var imagemin =    require('gulp-imagemin');
+var cache =       require('gulp-cache');
+var del =         require('del');
+var runSequence = require('run-sequence');
+var rigger =      require('gulp-rigger');
+const babel =     require('gulp-babel');
+const jshint =    require('jshint');
+//var autoprefixer = require('gulp-autoprefixer');
+
+var autoprefixer = require('autoprefixer-core');
+var csso = require("gulp-csso");
+var postcss = require('gulp-postcss');
+
+var dist_path = 'resources/static/static_build/';
+var src_path = 'resources/static/'
+gulp.task('build', function (callback) {
+	  del(dist_path);
+	  cache.clearAll();
+
+	  function build(){
+	  	del(dist_path);
+	 	cache.clearAll();
+
+	    return gulp.src(src_path + '/**/*.*')
+	        .pipe(gulpIf('*.html', rigger()))
+	        .pipe(gulpIf('*.css',postcss([ autoprefixer({ browsers: ["> 0%", 'safari 5', 'ie 6', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'] }) ])))
+	        .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
+	        .pipe(useref())
+	        .pipe(gulpIf('*.css', minifyCSS()))
+	        .pipe(gulpIf('*.js', babel({
+	            presets: ['es2015']
+	        })))
+	        .pipe(gulpIf('*.js', uglify()))
+	        .pipe(gulp.dest(dist_path)); 
+	  };
+	  build();
+	  gulp.src(src_path+'/fonts/*.*').pipe(gulp.dest(dist_path+'/fonts'))
+});

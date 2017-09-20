@@ -1,0 +1,99 @@
+@CHARSET "UTF-8";
+
+.container {
+	-webkit-user-select: none !important; /* Safari */
+	-moz-user-select: none !important; /* Firefox */
+	-ms-user-select: none !important; /* IE10+/Edge */
+	user-select: none !important; /* Standard */
+}
+
+.calendar {
+	border: 2px solid #2e6da4;
+	border-radius: 20px;
+	height: 200px;
+	width: 224px;
+	padding: 0 !important;
+}
+
+.calendar>*::selection {
+	background: transparent;
+}
+
+.calendar .navigator {
+	height: 50px;
+	border: 0px solid #2e6da4;
+	border-bottom: 2px solid #2e6da4;
+	border-radius: 20px 20px 0 0;
+	margin-right: 0px;
+	margin-left: 0px;
+	width: 100%;
+	border-radius: 20px 20px 0 0;
+	padding-top: 10px;
+}
+
+.arrow-left {
+	float: left;
+	width: 26px;
+	height: 26px;
+	display: inline-block;
+	margin-left: 20px;
+	cursor: pointer;
+	font-size: 16pt;
+	color: #2e6da4;
+}
+
+.arrow-right {
+	margin-right: 20px;
+	float: right;
+	width: 26px;
+	height: 26px;
+	display: inline-block;
+	cursor: pointer;
+	font-size: 16pt;
+	color: #2e6da4;
+}
+
+.arrow-right:hover, .arrow-left:hover {
+	color: white;
+	background-color: #2e6da4;
+}
+
+.month-view {
+	margin-top: 15px;
+	height: 135px;
+	text-align: left !important;
+	height: 130px;
+}
+
+.month-label {
+	margin-top: 10px;
+	margin-left: 3%;
+	width: 20%;
+	background-color: #2e6da4;
+	border: 2px solid #2e6da4;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 5px;
+	display: inline-block;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	display: none;
+}
+
+.month-label:hover {
+	background-color: #286090;
+}
+
+.active-label {
+	background-color: #5cb85c;
+}
+
+.active-label:hover {
+	background-color: #5cb85c;
+}
+
+.year-label {
+	display: inline-block;
+	font-size: 16pt;
+}

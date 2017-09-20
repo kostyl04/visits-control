@@ -2,6 +2,8 @@ package itmo.visits_control.dal.mssql;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import itmo.visits_control.dal.CrudDao;
 import itmo.visits_control.entities.mssql.Department;
 import itmo.visits_control.entities.mssql.Order;
 import itmo.visits_control.entities.mssql.Person;
+import itmo.visits_control.entities.mssql.ProfEducation;
 import itmo.visits_control.models.Escape;
 
 public interface MSSQLDao extends CrudDao {
@@ -20,7 +23,7 @@ public interface MSSQLDao extends CrudDao {
 
 	List<Order> checkOrderWorking(BigDecimal orderRate, int personalCode, Date orderDate, Date searchDate);
 
-	String getWorkRegimes(int yerNumber, int month);
+	List<String> getWorkRegimes(int yerNumber, int month);
 
 	List<Escape> getPersonMissions(int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth);
 
@@ -28,4 +31,6 @@ public interface MSSQLDao extends CrudDao {
 
 	List<Escape> getPersonLeaves(int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth);
 	List<String> getPersonDeppartments(final int personalCode,Date date,Date nextMonthDate);
+	List<Escape> getPersonEducations(int personalCode, Date firstDayOfMonth, Date firstDayOfNextMonth);
+	List<ProfEducation> testDateExstract() throws Exception;
 }

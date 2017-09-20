@@ -14,6 +14,7 @@ public class PersonInfo {
 	private long leaveHours;
 	private long disabilityHours;
 	private long missionHours;
+	private long educationHours;
 	private PersonInfoStatus status = PersonInfoStatus.Ok;
 	private List<String> personDeps;
 	
@@ -154,21 +155,23 @@ public class PersonInfo {
 	}
 
 	public long getWorkedOutPercent() {
-		return this.fullReqieredHours != 0 ? (long) (1d * this.workedOutHours / this.fullReqieredHours * 100) : 0;
+		return this.fullReqieredHours != 0 ? (long) (1d * getAllClosedHours() / this.fullReqieredHours * 100) : 0;
 	}
 
 	public long getNotWorkedHours() {
-		return Math.max(0, this.fullReqieredHours - this.workedOutHours - leaveHours - missionHours - disabilityHours);
+		return Math.max(0, this.fullReqieredHours - this.workedOutHours - leaveHours - missionHours - disabilityHours-educationHours);
 	}
 
 	public long getNotWorkedHoursPercent() {
-		long closedHours = this.workedOutHours + leaveHours + missionHours + disabilityHours;
+		long closedHours = this.workedOutHours + leaveHours + missionHours + disabilityHours + educationHours;
 		return this.fullReqieredHours != 0 ? Math.max(0, (long) (100 - 1d * closedHours / this.fullReqieredHours * 100))
 				: 0;
 	}
-
+	public long getAllClosedHours(){
+		return this.workedOutHours + leaveHours + missionHours + disabilityHours + educationHours;
+	}
 	public boolean isLeaver() {
-		if (getNotWorkedHoursPercent() > 39)
+		if (getWorkedOutPercent() < 60)
 			return true;
 		return false;
 	}
@@ -178,4 +181,13 @@ public class PersonInfo {
 			s+=d+"\n";
 		return s;
 	}
+
+	public long getEducationHours() {
+		return educationHours;
+	}
+
+	public void setEducationHours(long educationHours) {
+		this.educationHours = educationHours;
+	}
+	
 }

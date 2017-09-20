@@ -1,0 +1,165 @@
+@CHARSET "UTF-8";
+.button {
+	background-color: Transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+}
+
+#depTD {
+	font-size: 9pt !important;
+	text-align: left !important;
+	padding: 0!important;
+	
+}
+
+#table-results {
+	width: 850px;
+}
+
+#numTH {
+	width: 35px;
+}
+
+#fioTH {
+	width:300px;
+}
+
+#depTH {
+	width: 140px;
+}
+
+#rateTH {
+	width: 35px;
+}
+
+#planTH {
+	width: 40px;
+}
+
+#reqTH {
+	width: 60px;
+}
+
+#leaveTH {
+	width: 35px;
+}
+
+#disTH {
+	width: 35px;
+}
+
+#misTH {
+	width: 35px;
+}
+
+#courseTH {
+	width: 35px;
+}
+
+#allTH {
+	width: 74px;
+}
+
+#allHTH {
+	width: 35px;
+}
+
+#allPTH {
+	width: 50px;
+}
+
+header {
+	
+}
+
+#tabletoolbar {
+	
+}
+
+table tr td, th {
+	font-size: 12pt !important;
+	padding: 2px !important;
+	border: 2px solid !important;
+}
+
+table tr th {
+	text-align: center;
+}
+
+#res {
+	margin-bottom: 45px;
+}
+
+#tabletoolbar:hover {
+	
+}
+
+#tabletoolbar>.container {
+	margin-top: 20px;
+}
+
+.toolbar-btn {
+	width: 37px;
+	height: 30px;
+	font-size: 14pt;
+	color: black;
+}
+
+.fio-input {
+	
+}
+
+.rate-input {
+	
+}
+
+.percent-input {
+	
+}
+
+.toolbar-btn:hover {
+	color: green;
+}
+
+.input-control {
+	/*display: none*/
+	
+}
+
+#tabletoolbar:hover .input-control {
+	/*display: inline-block;*/
+	
+}
+
+.content {
+	min-height: 760px;
+}
+
+
+
+#trigger:hover>#tabletoolbar {
+	height: 120px;
+}
+
+
+
+.content {
+	margin-top: 150px;
+}
+
+.vertical {
+	text-align: center !important;
+	font-size: 11pt !important;
+	vertical-align: middle !important;
+	line-height: 0.9 !important;
+	padding: 2px !important;
+	height: 120px;
+}
+
+.vertical-span {
+	white-space: nowrap;
+	writing-mode: vertical-lr;
+}

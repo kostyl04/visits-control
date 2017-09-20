@@ -32,8 +32,9 @@ public class MainController {
 	@RequestMapping(value = "/result", consumes = "application/x-www-form-urlencoded; charset=UTF-8")
 	public ModelAndView result(@ModelAttribute FormCommandModel form) throws Exception {
 		String rate=form.getRate()==0?"действующую":String.valueOf(form.getRate());
-		String titleString = "Показаны результаты за " + months[form.getMonth()-1] + " " + form.getYear() + " года.\n"+"В пересчете на "+rate+" ставку.";
-		form.getJsonStrings().forEach(System.out::println);
+		///String titleString = "Результаты за " + months[form.getMonth()-1] + " " + form.getYear() + " года "+"в пересчете на "+rate+" ставку.";
+		String titleString = "Результаты за " + months[form.getMonth()] + " " + form.getYear() + " года "+"в пересчете на "+rate+" ставку.";
+		System.out.println(titleString);
 		Long t = System.currentTimeMillis();
 		List<ResultModel>result=service.computeResults(form.getMonth(), form.getYear(), form.getJsonStrings(),form.getRate());
 		ModelAndView mav = new ModelAndView();
